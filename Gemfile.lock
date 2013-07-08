@@ -30,6 +30,8 @@ GEM
     arel (4.0.0)
     atomic (1.1.10)
     builder (3.1.4)
+    chunky_png (1.2.8)
+    coderay (1.0.9)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -37,6 +39,13 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    columnize (0.3.6)
+    debugger (1.6.1)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.2.3)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.2.3)
     erubis (2.7.0)
     excon (0.25.1)
     execjs (1.4.0)
@@ -53,11 +62,19 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    method_source (0.8.1)
     mime-types (1.23)
     minitest (4.7.5)
     multi_json (1.7.7)
     pg (0.15.1)
     polyglot (0.3.3)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    pry-debugger (0.2.2)
+      debugger (~> 1.3)
+      pry (~> 0.9.10)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -93,6 +110,7 @@ GEM
       json (>= 1.1.3)
       rdoc (~> 3.10)
     simple_oauth (0.2.0)
+    slop (3.4.5)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -121,11 +139,14 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-postgis-adapter
+  chunky_png
   coffee-rails (~> 4.0.0)
   excon
   jbuilder (~> 1.2)
   jquery-rails
   pg
+  pry
+  pry-debugger
   rails (= 4.0.0)
   rgeo
   rgeo-geojson

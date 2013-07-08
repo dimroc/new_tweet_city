@@ -1,0 +1,19 @@
+class Tweet < ActiveRecord::Base
+  NYC_BOTTOM_LEFT = Mercator.to_projected(Mercator::FACTORY.point(-74.3, 40.462))
+  NYC_TOP_RIGHT = Mercator.to_projected(Mercator::FACTORY.point(-73.65, 40.95))
+
+  def self.create_from_tweet!(tweet)
+    coordinates = tweet['coordinates']['coordinates']
+    geographic_point = Mercator::FACTORY.point(coordinates[0], coordinates[1])
+
+    create!(
+      text: tweet['text'],
+      point: Mercator.to_projected(geographic_point)
+    )
+  end
+
+  def self.within_nyc
+    line = Mercator::FACTORY.projection_factory.line(NYC_BOTTOM_LEFT, NYC_TOP_RIGHT).envelope
+    where("ST_Intersects(ST_GeomFromText('#{line.as_text}', #{Mercator::SRID}), point)")
+  end
+end
