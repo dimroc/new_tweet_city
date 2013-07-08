@@ -1,0 +1,15 @@
+development: &defaults
+  adapter: postgis
+  encoding: unicode
+  database: new_tweet_city_development
+  pool: 5
+  postgis_extension: postgis,postgis_topology
+  schema_search_path: public,topology
+
+test:
+  <<: *defaults
+  database: new_tweet_city_test
+
+production:
+  <<: *defaults
+  database: new_tweet_city_production
