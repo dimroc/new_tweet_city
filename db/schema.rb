@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130708125938) do
+ActiveRecord::Schema.define(version: 20130708224526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,5 +26,6 @@ ActiveRecord::Schema.define(version: 20130708125938) do
   end
 
   add_index "tweets", ["created_at"], :name => "index_tweets_on_created_at"
+  add_index "tweets", ["point"], :name => "index_tweets_on_point", :spatial => true
 
 end
