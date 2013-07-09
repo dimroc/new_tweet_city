@@ -6,15 +6,15 @@ class TweetImageService
     @height = height
     @png = ChunkyPNG::Image.new(width, height, ChunkyPNG::Color::WHITE)
 
-    @mercator_width = Tweet::NYC_TOP_RIGHT.x - Tweet::NYC_BOTTOM_LEFT.x
-    @mercator_height = Tweet::NYC_TOP_RIGHT.y - Tweet::NYC_BOTTOM_LEFT.y
+    @mercator_width = Tweet::MANHATTAN_TOP_RIGHT.x - Tweet::MANHATTAN_BOTTOM_LEFT.x
+    @mercator_height = Tweet::MANHATTAN_TOP_RIGHT.y - Tweet::MANHATTAN_BOTTOM_LEFT.y
 
     @earliest = Tweet.order(:created_at).first.created_at
     @latest = Tweet.order("created_at DESC").first.created_at
   end
 
   def save(filename)
-    Tweet.within_nyc.find_each do |tweet|
+    Tweet.within_manhattan.find_each do |tweet|
       set_pixel tweet
     end
 
@@ -35,30 +35,27 @@ class TweetImageService
       color_frequency(pixel_coordinates),
       255)
 
-    @png.set_pixel(
-      pixel_coordinates[0],
-      pixel_coordinates[1],
-      color)
+    @png[pixel_coordinates[0], pixel_coordinates[1]] = color
 
-  rescue ChunkyPNG::OutOfBounds
-    puts "skipping pixel, out of bounds"
+  rescue ChunkyPNG::OutOfBounds => e
+    puts e.message
   end
 
   def map_x(point)
-    offset = point.x - Tweet::NYC_BOTTOM_LEFT.x
-    normalized_distance = (offset.to_f / @mercator_width)
-    (normalized_distance * @width).to_i
+    offset = point.x - Tweet::MANHATTAN_BOTTOM_LEFT.x
+    normalized_distance = (offset.to_f / @mercator_height)
+    (normalized_distance * @height).to_i
   end
 
   def map_y(point)
-    offset = point.y - Tweet::NYC_BOTTOM_LEFT.y
+    offset = point.y - Tweet::MANHATTAN_BOTTOM_LEFT.y
 
     # Intentionally use width again to force same scale
-    normalized_distance = (offset.to_f / @mercator_width)
-    mapped = (normalized_distance * @width).to_i
+    normalized_distance = (offset.to_f / @mercator_height)
+    mapped = (normalized_distance * @height).to_i
 
     # ChunkyPNG has row 0 at the top, not bottom of image. Flip
-    @width - mapped
+    @height - mapped
   end
 
   def color_age(date)
