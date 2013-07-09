@@ -3,7 +3,7 @@ class Tweet < ActiveRecord::Base
   NYC_TOP_RIGHT = Mercator.to_projected(Mercator::FACTORY.point(-73.65, 40.95))
 
   MANHATTAN_BOTTOM_LEFT = Mercator.to_projected(Mercator::FACTORY.point(-74.06, 40.675))
-  MANHATTAN_TOP_RIGHT = Mercator.to_projected(Mercator::FACTORY.point(-73.9, 40.884))
+  MANHATTAN_TOP_RIGHT = Mercator.to_projected(Mercator::FACTORY.point(-73.74, 40.884))
 
   def self.create_from_tweet!(tweet)
     coordinates = tweet['coordinates']['coordinates']
