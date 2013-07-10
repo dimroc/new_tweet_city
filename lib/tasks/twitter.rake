@@ -3,12 +3,15 @@ namespace :twitter do
   task :stream => :environment do
     TwitterService.new.stream_nyc do |tweet|
       if !tweet["coordinates"]
-        print 'F'
+        print 'M'
         next
       end
 
-      Tweet.create_from_tweet!(tweet)
-      print '.'
+      if Tweet.create_from_tweet(tweet)
+        print '.'
+      else
+        print 'F'
+      end
     end
   end
 

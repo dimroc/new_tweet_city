@@ -18,6 +18,8 @@ class TwitterService
       headers: headers(path, query),
       query: URI.encode_www_form(query),
       response_block: streamer)
+  rescue JSON::ParserError => e
+    puts e.message
   end
 
   private

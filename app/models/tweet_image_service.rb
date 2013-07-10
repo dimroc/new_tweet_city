@@ -30,9 +30,9 @@ class TweetImageService
       map_y(tweet.point)]
 
     color = ChunkyPNG::Color.rgba(
-      color_age(tweet.created_at),
-      0,
       color_frequency(pixel_coordinates),
+      0,
+      255,
       255)
 
     @png[pixel_coordinates[0], pixel_coordinates[1]] = color
@@ -73,6 +73,6 @@ class TweetImageService
       @frequency_buckets[key] = 1
     end
 
-    ((@frequency_buckets[key].to_f / 25) * 255).to_i
+    ((@frequency_buckets[key].to_f / 15) * 255).to_i
   end
 end
