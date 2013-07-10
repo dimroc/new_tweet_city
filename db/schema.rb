@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130710125122) do
+ActiveRecord::Schema.define(version: 20130710225432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20130710125122) do
   enable_extension "postgis_topology"
 
   create_table "tweets", force: true do |t|
-    t.string   "text"
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.spatial  "coordinates",            limit: {:srid=>3785, :type=>"point"}
