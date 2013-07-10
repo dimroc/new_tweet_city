@@ -11,17 +11,18 @@ class Tweet < ActiveRecord::Base
 
     create(
       text: tweet['text'],
-      point: Mercator.to_projected(geographic_point)
+      geographic_coordinates: geographic_point,
+      coordinates: Mercator.to_projected(geographic_point)
     )
   end
 
   def self.within_nyc
     envelope = Mercator::FACTORY.projection_factory.line(NYC_BOTTOM_LEFT, NYC_TOP_RIGHT).envelope
-    where("ST_Intersects(ST_GeomFromText('#{envelope.as_text}', #{Mercator::SRID}), point)")
+    where("ST_Intersects(ST_GeomFromText('#{envelope.as_text}', #{Mercator::SRID}), coordinates)")
   end
 
   def self.within_manhattan
     envelope = Mercator::FACTORY.projection_factory.line(MANHATTAN_BOTTOM_LEFT, MANHATTAN_TOP_RIGHT).envelope
-    where("ST_Intersects(ST_GeomFromText('#{envelope.as_text}', #{Mercator::SRID}), point)")
+    where("ST_Intersects(ST_GeomFromText('#{envelope.as_text}', #{Mercator::SRID}), coordinates)")
   end
 end

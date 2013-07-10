@@ -26,8 +26,8 @@ class TweetImageService
 
   def set_pixel(tweet)
     pixel_coordinates = [
-      map_x(tweet.point),
-      map_y(tweet.point)]
+      map_x(tweet.coordinates),
+      map_y(tweet.coordinates)]
 
     color = ChunkyPNG::Color.rgba(
       color_frequency(pixel_coordinates),
@@ -41,14 +41,14 @@ class TweetImageService
     puts e.message
   end
 
-  def map_x(point)
-    offset = point.x - Tweet::MANHATTAN_BOTTOM_LEFT.x
+  def map_x(coordinates)
+    offset = coordinates.x - Tweet::MANHATTAN_BOTTOM_LEFT.x
     normalized_distance = (offset.to_f / @mercator_height)
     (normalized_distance * @height).to_i
   end
 
-  def map_y(point)
-    offset = point.y - Tweet::MANHATTAN_BOTTOM_LEFT.y
+  def map_y(coordinates)
+    offset = coordinates.y - Tweet::MANHATTAN_BOTTOM_LEFT.y
 
     # Intentionally use width again to force same scale
     normalized_distance = (offset.to_f / @mercator_height)
