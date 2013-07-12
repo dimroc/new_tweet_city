@@ -19,6 +19,6 @@ namespace :twitter do
   task :image => :environment do
     filename = "tmp/tweet_pic_#{Time.now.to_i}.png"
     puts "Generating #{filename}"
-    TweetImageService.new(1024, 1024).save filename
+    TweetImageService.new(2048, 2048).save filename
   end
 end
