@@ -1,0 +1,6 @@
+#!/bin/bash
+RBENV_ROOT=/usr/local/rbenv
+PATH=/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+. $HOME/workspace/new_tweet_city/.env
+
+sudo -u ubuntu RBENV_ROOT=$RBENV_ROOT PATH=$PATH AWS_S3_KEY=$AWS_S3_KEY AWS_S3_SECRET=$AWS_S3_SECRET $HOME/workspace/new_tweet_city/bin/backup
