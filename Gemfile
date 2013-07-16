@@ -7,9 +7,15 @@ gem 'pg'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo'
 gem 'rgeo-geojson'
-gem 'excon'
 gem 'simple_oauth'
 gem 'chunky_png'
+
+# backup and dependencies
+gem 'backup'
+gem 'excon', '~> 0.17.0'
+gem 'net-ssh', '<= 2.5.2'
+gem 'net-scp', '<= 1.0.4'
+gem 'fog', '~> 1.9.0'
 
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
