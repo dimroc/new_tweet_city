@@ -20,11 +20,12 @@ Backup::Model.new(:new_tweet_city_backup, 'Description for new_tweet_city_backup
   #
   database PostgreSQL do |db|
     db.name               = "new_tweet_city_production"
-    #db.username           = "postgres"
+    db.username           = "ubuntu"
     #db.password           = "my_password"
     db.host               = "localhost"
     db.port               = 5432
-    db.socket             = "/tmp"
+    #db.socket             = "/tmp"
+    db.socket             = "/var/run/postgresql"
     db.additional_options = ["-xc", "-E=utf8"]
   end
 
