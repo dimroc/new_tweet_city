@@ -1,2 +1,2 @@
 #!/bin/bash
-bundle exec backup perform -t new_tweet_city_backup -c /home/ubuntu/workspace/new_tweet_city/lib/backup.rb
+bundle exec backup perform -t new_tweet_city_backup -c lib/backup.rb
