@@ -1,7 +1,7 @@
 class TweetImageService
   attr_reader :width, :height
 
-  def initialize(width, height)
+  def initialize(width=2048, height=2048)
     @width = width
     @height = height
     @png = ChunkyPNG::Image.new(width, height, ChunkyPNG::Color::WHITE)
