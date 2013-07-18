@@ -9,6 +9,7 @@ gem 'rgeo'
 gem 'rgeo-geojson'
 gem 'simple_oauth'
 gem 'chunky_png'
+gem 'twitter-bootstrap-rails'
 
 # backup and dependencies
 gem 'backup'
