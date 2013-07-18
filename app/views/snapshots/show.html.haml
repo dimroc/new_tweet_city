@@ -1,0 +1,5 @@
+.floating-header
+  .date= @snapshot.created_at.strftime("%B %d, %Y at %I:%M%p")
+  .count= "Tweets: #{@snapshot.tweet_count}"
+
+= image_tag @snapshot.url

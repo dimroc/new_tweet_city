@@ -1,0 +1,3 @@
+%ul
+  - @snapshots.each do |snapshot|
+    %li= link_to "Snapshot #{snapshot.created_at}", snapshot_path(snapshot)

@@ -10,6 +10,10 @@ gem 'rgeo-geojson'
 gem 'simple_oauth'
 gem 'chunky_png'
 gem 'twitter-bootstrap-rails'
+gem 'haml-rails'
+gem 'thin-rails'
+gem 'less-rails'
+gem 'therubyracer'
 
 # backup and dependencies
 gem 'backup'
