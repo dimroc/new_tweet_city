@@ -36,7 +36,7 @@ Backup::Model.new(:new_tweet_city_backup, 'Description for new_tweet_city_backup
     s3.access_key_id     = ENV['AWS_S3_KEY']
     s3.secret_access_key = ENV['AWS_S3_SECRET']
     s3.region            = "us-east-1"
-    s3.bucket            = "newtweetcity"
+    s3.bucket            = ENV['AWS_BUCKET']
     s3.path              = "/backups"
     s3.keep              = 4
   end

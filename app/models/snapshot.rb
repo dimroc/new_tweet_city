@@ -22,7 +22,7 @@ class Snapshot < ActiveRecord::Base
         aws_secret_access_key: ENV['AWS_S3_SECRET']
       })
 
-      directory = connection.directories.get('newtweetcity')
+      directory = connection.directories.get(ENV['AWS_BUCKET'])
       directory.files.create(
         key: "snapshots/#{filename}",
         body: File.open("/tmp/#{filename}"),
