@@ -1,11 +1,21 @@
 class Snapshot < ActiveRecord::Base
-  def self.generate
-    imageService = TweetImageService.new
+  def self.generate(ends_at = DateTime.now)
+    generate_between(Tweet.chronological.first.created_at, ends_at)
+  end
+
+  def self.generate_between(begins_at, ends_at)
+    imageService = TweetImageService.new(
+      begins_at: begins_at,
+      ends_at: ends_at)
+
     filename = generate_filename
 
     imageService.save "/tmp/#{filename}"
     upload = upload_snapshot filename
-    create(url: upload.public_url, tweet_count: Tweet.count)
+    create(url: upload.public_url,
+           tweet_count: Tweet.where(created_at: (begins_at..ends_at)).count,
+           begins_at: begins_at,
+           ends_at: ends_at)
   end
 
   private

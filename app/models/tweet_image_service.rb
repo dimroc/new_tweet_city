@@ -1,20 +1,20 @@
 class TweetImageService
   attr_reader :width, :height
 
-  def initialize(width=2048, height=2048)
-    @width = width
-    @height = height
+  def initialize(options={})
+    @width = options[:width] || 2048
+    @height = options[:height] || 2048
     @png = ChunkyPNG::Image.new(width, height, ChunkyPNG::Color::WHITE)
 
     @mercator_width = Tweet::MANHATTAN_TOP_RIGHT.x - Tweet::MANHATTAN_BOTTOM_LEFT.x
     @mercator_height = Tweet::MANHATTAN_TOP_RIGHT.y - Tweet::MANHATTAN_BOTTOM_LEFT.y
 
-    @earliest = Tweet.order(:created_at).first.created_at
-    @latest = Tweet.order("created_at DESC").first.created_at
+    @earliest = options[:begins_at] || Tweet.chronological.first.created_at
+    @latest = options[:ends_at] || Tweet.order("created_at DESC").first.created_at
   end
 
   def save(filename)
-    Tweet.within_manhattan.find_each do |tweet|
+    Tweet.where(created_at: (@earliest..@latest)).within_manhattan.find_each do |tweet|
       set_pixel tweet
     end
 
@@ -29,10 +29,11 @@ class TweetImageService
       map_x(tweet.coordinates),
       map_y(tweet.coordinates)]
 
+    frequency = generate_frequency_color(pixel_coordinates)
     color = ChunkyPNG::Color.rgba(
-      color_frequency(pixel_coordinates),
+      frequency,
       0,
-      255,
+      255 - frequency,
       255)
 
     @png[pixel_coordinates[0], pixel_coordinates[1]] = color
@@ -64,7 +65,7 @@ class TweetImageService
     ((offset.to_f / range) * 255).to_i
   end
 
-  def color_frequency(pixel_coordinates)
+  def generate_frequency_color(pixel_coordinates)
     @frequency_buckets ||= {}
     key = "#{pixel_coordinates[0]},#{pixel_coordinates[1]}".to_sym
     if @frequency_buckets[key]
@@ -73,6 +74,6 @@ class TweetImageService
       @frequency_buckets[key] = 1
     end
 
-    ((@frequency_buckets[key].to_f / 15) * 255).to_i
+    ((@frequency_buckets[key].to_f / 20) * 255).to_i
   end
 end
