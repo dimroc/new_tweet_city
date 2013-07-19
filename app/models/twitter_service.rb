@@ -1,12 +1,6 @@
 require 'uri'
 
 class TwitterService
-  OAUTH_TOKEN =  ENV['TWITTER_OAUTH_TOKEN']
-  OAUTH_SECRET = ENV['TWITTER_OAUTH_SECRET']
-
-  CONSUMER_KEY = ENV["TWITTER_CONSUMER_KEY"]
-  CONSUMER_SECRET = ENV["TWITTER_CONSUMER_SECRET"]
-
   def stream_nyc
     path = "https://stream.twitter.com/1.1/statuses/filter.json"
     query = { locations: "-74.3,40.462,-73.65,40.95" }
@@ -34,10 +28,10 @@ class TwitterService
 
   def oauth_header(path, query)
     options = {
-      consumer_key: CONSUMER_KEY,
-      consumer_secret: CONSUMER_SECRET,
-      token: OAUTH_TOKEN,
-      token_secret: OAUTH_SECRET,
+      consumer_key: Settings.twitter.consumer_key,
+      consumer_secret: Settings.twitter.consumer_secret,
+      token: Settings.twitter.oauth_token,
+      token_secret: Settings.twitter.oauth_secret
     }
 
     SimpleOAuth::Header.new(:get, path, query, options)

@@ -14,6 +14,7 @@ gem 'haml-rails'
 gem 'thin-rails'
 gem 'less-rails'
 gem 'therubyracer'
+gem 'settingslogic'
 
 # backup and dependencies
 gem 'backup'

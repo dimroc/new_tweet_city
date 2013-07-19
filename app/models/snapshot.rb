@@ -18,11 +18,11 @@ class Snapshot < ActiveRecord::Base
     def upload_snapshot(filename)
       connection = Fog::Storage.new({
         provider: 'AWS',
-        aws_access_key_id: ENV['AWS_S3_KEY'],
-        aws_secret_access_key: ENV['AWS_S3_SECRET']
+        aws_access_key_id: Settings.aws.s3_key,
+        aws_secret_access_key: Settings.aws.s3_secret
       })
 
-      directory = connection.directories.get(ENV['AWS_BUCKET'])
+      directory = connection.directories.get(Settings.aws.bucket)
       directory.files.create(
         key: "snapshots/#{filename}",
         body: File.open("/tmp/#{filename}"),
