@@ -1,5 +1,16 @@
 .floating-header
   .date= @snapshot.created_at.strftime("%B %d, %Y at %I:%M%p")
   .count= "Tweets: #{@snapshot.tweet_count}"
+  - if @previous
+    = link_to snapshot_path(@previous) do
+      %i{class: "icon-chevron-left"}
+  - else
+    %i{class: "icon-chevron-left"}
+
+  - if @next
+    = link_to snapshot_path(@next) do
+      %i{class: "icon-chevron-right"}
+  - else
+    %i{class: "icon-chevron-right"}
 
 = image_tag @snapshot.url
