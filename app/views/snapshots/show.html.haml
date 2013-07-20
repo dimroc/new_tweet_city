@@ -1,7 +1,7 @@
 .floating-header
   .begins= l @snapshot.begins_at, format: :human
   .ends= l @snapshot.ends_at, format: :human
-  .count= "Tweets: #{@snapshot.tweet_count}"
+  .count= "Tweets: #{number_with_delimiter @snapshot.tweet_count}"
   - if @previous
     = link_to snapshot_path(@previous) do
       %i{class: "icon-chevron-left"}
