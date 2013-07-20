@@ -16,6 +16,8 @@ gem 'less-rails'
 gem 'therubyracer'
 gem 'settingslogic'
 
+gem 'rails_12factor'
+
 # backup and dependencies
 gem 'backup'
 gem 'excon', '~> 0.17.0'
