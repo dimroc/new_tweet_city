@@ -1,5 +1,6 @@
 .floating-header
-  .date= @snapshot.created_at.strftime("%B %d, %Y at %I:%M%p")
+  .begins= @snapshot.begins_at.strftime("%B %d, %Y at %I:%M%p")
+  .ends= @snapshot.ends_at.strftime("%B %d, %Y at %I:%M%p")
   .count= "Tweets: #{@snapshot.tweet_count}"
   - if @previous
     = link_to snapshot_path(@previous) do
