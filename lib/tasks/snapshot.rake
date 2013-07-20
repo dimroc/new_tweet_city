@@ -7,4 +7,9 @@ namespace :snapshot do
       Snapshot.generate(start + (difference + 1).days)
     end
   end
+
+  desc "Generate a snapshot for the current time"
+  task :generate => :environment do
+    Snapshot.generate
+  end
 end
