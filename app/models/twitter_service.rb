@@ -10,11 +10,13 @@ class TwitterService
       yield json if json
     end
 
-    Excon.get(
+    response = Excon.get(
       path,
       headers: headers(path, query),
       query: URI.encode_www_form(query),
       response_block: streamer)
+
+    raise IOError, "HTTP returned #{response.status}" if response.status >= 400
   end
 
   private
