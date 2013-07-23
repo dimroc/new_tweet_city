@@ -4,12 +4,12 @@ namespace :snapshot do
     start = Tweet.chronological.first.created_at
     days = (Time.zone.now - start).to_i / 1.day
     days.times do |difference|
-      Snapshot.generate(start + (difference + 1).days)
+      SnapshotFactory.new.generate(start + (difference + 1).days)
     end
   end
 
   desc "Generate a snapshot for the current time"
   task :generate => :environment do
-    Snapshot.generate
+    SnapshotFactory.new.generate
   end
 end

@@ -1,8 +1,8 @@
 class ImageService::Manhattan < ImageService
-  def initialize
+  def initialize(options={})
     @topright = Tweet::MANHATTAN_TOP_RIGHT
     @bottomleft = Tweet::MANHATTAN_BOTTOM_LEFT
-    super
+    super(options)
   end
 
   def generate
