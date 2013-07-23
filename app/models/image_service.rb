@@ -1,4 +1,4 @@
-class TweetImageService
+class ImageService
   attr_reader :width, :height
 
   def initialize(options={})
@@ -6,23 +6,23 @@ class TweetImageService
     @height = options[:height] || 2048
     @png = ChunkyPNG::Image.new(width, height, ChunkyPNG::Color::WHITE)
 
-    @mercator_width = Tweet::MANHATTAN_TOP_RIGHT.x - Tweet::MANHATTAN_BOTTOM_LEFT.x
-    @mercator_height = Tweet::MANHATTAN_TOP_RIGHT.y - Tweet::MANHATTAN_BOTTOM_LEFT.y
-
     @earliest = options[:begins_at] || Tweet.chronological.first.created_at
     @latest = options[:ends_at] || Tweet.order("created_at DESC").first.created_at
+
+    @mercator_width = @topright.x - @bottomleft.x
+    @mercator_height = @topright.y - @bottomleft.y
   end
 
   def save(filename)
-    Tweet.where(created_at: (@earliest..@latest)).within_manhattan.find_each do |tweet|
-      set_pixel tweet
-    end
+    generate
 
     @png.save filename
     FileUtils.cp filename, "tmp/latest.png"
   end
 
-  private
+  def generate
+    raise NotImplementedError, "Must invoke from sub class"
+  end
 
   def set_pixel(tweet)
     pixel_coordinates = [
@@ -42,14 +42,16 @@ class TweetImageService
     puts e.message
   end
 
+  private
+
   def map_x(coordinates)
-    offset = coordinates.x - Tweet::MANHATTAN_BOTTOM_LEFT.x
+    offset = coordinates.x - @bottomleft.x
     normalized_distance = (offset.to_f / @mercator_height)
     (normalized_distance * @height).to_i
   end
 
   def map_y(coordinates)
-    offset = coordinates.y - Tweet::MANHATTAN_BOTTOM_LEFT.y
+    offset = coordinates.y - @bottomleft.y
 
     # Intentionally use width again to force same scale
     normalized_distance = (offset.to_f / @mercator_height)

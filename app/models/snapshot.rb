@@ -4,7 +4,7 @@ class Snapshot < ActiveRecord::Base
   end
 
   def self.generate_between(begins_at, ends_at)
-    imageService = TweetImageService.new(
+    imageService = ImageService::Manhattan.new(
       begins_at: begins_at,
       ends_at: ends_at)
 
