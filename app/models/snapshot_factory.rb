@@ -45,7 +45,7 @@ class SnapshotFactory
 
     directory = connection.directories.get(Settings.aws.bucket)
     directory.files.create(
-      key: "snapshots/#{filename}",
+      key: "snapshots/#{area}/#{filename}",
       body: File.open("/tmp/#{filename}"),
       public: true)
   end
