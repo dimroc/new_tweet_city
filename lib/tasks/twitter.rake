@@ -24,11 +24,4 @@ namespace :twitter do
   task :stream => :environment do
     run_stream
   end
-
-  desc "generate image based on tweet coordinates"
-  task :image => :environment do
-    filename = "tmp/tweet_pic_#{Time.now.to_i}.png"
-    puts "Generating #{filename}"
-    ImageService::Manhattan.new.save filename
-  end
 end

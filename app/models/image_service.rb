@@ -17,7 +17,6 @@ class ImageService
     generate
 
     @png.save filename
-    FileUtils.cp filename, "tmp/latest.png"
   end
 
   def generate
