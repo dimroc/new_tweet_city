@@ -21,6 +21,6 @@ class SnapshotsController < ApplicationController
 
   def safely_assign_area
     @area = params[:area] || "manhattan"
-    raise ActiveRecord::RecordNotFound unless ["nyc", "manhattan"].include? @area
+    raise ActiveRecord::RecordNotFound unless Area::NAMES.include? @area
   end
 end

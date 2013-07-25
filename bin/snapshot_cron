@@ -4,4 +4,4 @@ PATH=/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/local/sbin:/usr/local/bin:
 
 cd /home/ubuntu/workspace/new_tweet_city
 . ./bin/set_env .env # Export all ENV vars for subprocess
-bundle exec rake snapshot:generate &> /tmp/snapshot_generation
+bundle exec rake snapshot:generate_all &> /tmp/snapshot_generation

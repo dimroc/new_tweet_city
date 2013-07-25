@@ -3,6 +3,7 @@ class SnapshotFactory
 
   def initialize(area = :manhattan)
     @area = area
+    raise ArgumentError, "Invalid area" unless Area::NAMES.include? area.to_s
   end
 
   def generate(ends_at = DateTime.now)

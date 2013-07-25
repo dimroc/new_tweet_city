@@ -11,10 +11,20 @@ namespace :snapshot do
     end
   end
 
-  desc "Generate a snapshot for the current time"
+  desc "Generate a snapshot for the passed area at the current time"
   task :generate, [:areaArg] => :environment do |t, args|
-    area = args[:areaArg] || :manhattan
-    puts "Generating everyday for #{area}"
+    area = args[:areaArg]
+    raise ArgumentError, "Area argument (nyc, manhattan, etc) required" unless area.present?
+
+    puts "Generating snapshot for #{area}"
     SnapshotFactory.new(area).generate
+  end
+
+  desc "Generate snapshots for all areas"
+  task :generate_all => :environment do |t, args|
+    Area::NAMES.each do |area|
+      puts "Generating snapshot for #{area}"
+      SnapshotFactory.new(area).generate
+    end
   end
 end
