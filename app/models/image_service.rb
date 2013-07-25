@@ -1,10 +1,11 @@
 class ImageService
   attr_reader :width, :height
 
-  def initialize(options={})
+  def initialize(options={}, color_strategy = ColorStrategy.new)
     @width = options[:width] || 2048
     @height = options[:height] || 2048
     @png = ChunkyPNG::Image.new(width, height, ChunkyPNG::Color::WHITE)
+    @color_strategy = color_strategy
 
     @earliest = options[:begins_at] || Tweet.chronological.first.created_at
     @latest = options[:ends_at] || Tweet.order("created_at DESC").first.created_at
@@ -15,7 +16,6 @@ class ImageService
 
   def save(filename)
     generate
-
     @png.save filename
   end
 
@@ -28,15 +28,8 @@ class ImageService
       map_x(tweet.coordinates),
       map_y(tweet.coordinates)]
 
-    frequency = generate_frequency_color(pixel_coordinates)
-    color = ChunkyPNG::Color.rgba(
-      frequency,
-      0,
-      255 - frequency,
-      255)
-
+    color = @color_strategy.generate(pixel_coordinates)
     @png[pixel_coordinates[0], pixel_coordinates[1]] = color
-
   rescue ChunkyPNG::OutOfBounds => e
     puts e.message
   end
@@ -58,23 +51,5 @@ class ImageService
 
     # ChunkyPNG has row 0 at the top, not bottom of image. Flip
     @height - mapped
-  end
-
-  def color_age(date)
-    offset = date.to_i - @earliest.to_i
-    range = @latest.to_i - @earliest.to_i
-    ((offset.to_f / range) * 255).to_i
-  end
-
-  def generate_frequency_color(pixel_coordinates)
-    @frequency_buckets ||= {}
-    key = "#{pixel_coordinates[0]},#{pixel_coordinates[1]}".to_sym
-    if @frequency_buckets[key]
-      @frequency_buckets[key] += 1
-    else
-      @frequency_buckets[key] = 1
-    end
-
-    ((@frequency_buckets[key].to_f / 20) * 255).to_i
   end
 end
