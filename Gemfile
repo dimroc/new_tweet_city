@@ -15,6 +15,7 @@ gem 'thin-rails'
 gem 'less-rails'
 gem 'therubyracer'
 gem 'settingslogic'
+gem 'color'
 
 gem 'rails_12factor'
 

@@ -42,6 +42,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    color (1.4.2)
     columnize (0.3.6)
     commonjs (0.2.6)
     daemons (1.1.9)
@@ -200,6 +201,7 @@ DEPENDENCIES
   backup
   chunky_png
   coffee-rails (~> 4.0.0)
+  color
   excon (~> 0.17.0)
   fog (~> 1.9.0)
   haml-rails
