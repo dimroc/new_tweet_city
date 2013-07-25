@@ -1,4 +1,4 @@
-%h1 Snapshots
+%h1 #{@area.humanize} Snapshots
 %ul
   - @snapshots.each do |snapshot|
-    %li= link_to "#{l snapshot.begins_at, format: :human} - #{l snapshot.ends_at, format: :human}", snapshot_path(snapshot)
+    %li= link_to "#{l snapshot.begins_at, format: :human} - #{l snapshot.ends_at, format: :human}", snapshot_path(@area, snapshot)
