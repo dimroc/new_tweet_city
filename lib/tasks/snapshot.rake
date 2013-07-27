@@ -27,4 +27,11 @@ namespace :snapshot do
       SnapshotFactory.new(area).generate
     end
   end
+
+  desc "Update images of existing snapshots"
+  task :update_images => :environment do
+    Snapshot.find_each do |snapshot|
+      snapshot.update_image!
+    end
+  end
 end

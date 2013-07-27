@@ -11,6 +11,16 @@ class SnapshotFactory
   end
 
   def generate_between(begins_at, ends_at)
+    upload = generate_image(begins_at, ends_at)
+    Snapshot.create(
+      url: upload.public_url,
+      area: area,
+      tweet_count: Tweet.where(created_at: (begins_at..ends_at)).count,
+      begins_at: begins_at,
+      ends_at: ends_at)
+  end
+
+  def generate_image(begins_at, ends_at)
     imageService = image_class.new(
       begins_at: begins_at,
       ends_at: ends_at)
@@ -18,13 +28,7 @@ class SnapshotFactory
     filename = generate_filename
 
     imageService.save "/tmp/#{filename}"
-    upload = upload_snapshot filename
-    Snapshot.create(
-      url: upload.public_url,
-      area: area,
-      tweet_count: Tweet.where(created_at: (begins_at..ends_at)).count,
-      begins_at: begins_at,
-      ends_at: ends_at)
+    upload_snapshot filename
   end
 
   private
@@ -38,16 +42,8 @@ class SnapshotFactory
   end
 
   def upload_snapshot(filename)
-    connection = Fog::Storage.new({
-      provider: 'AWS',
-      aws_access_key_id: Settings.aws.s3_key,
-      aws_secret_access_key: Settings.aws.s3_secret
-    })
-
-    directory = connection.directories.get(Settings.aws.bucket)
-    directory.files.create(
-      key: "snapshots/#{area}/#{filename}",
-      body: File.open("/tmp/#{filename}"),
-      public: true)
+    FogService.new.upload(
+      "snapshots/#{area}/#{filename}",
+      File.open("/tmp/#{filename}"))
   end
 end

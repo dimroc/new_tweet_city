@@ -1,6 +1,6 @@
 class ColorStrategy
-  START_COLOR = Color::RGB.from_html("#a5cbef")
-  TARGET_COLOR = Color::RGB::DarkBlue
+  START_COLOR = Color::RGB.from_html("#3B848C")
+  TARGET_COLOR = Color::RGB.from_html("#BF2431")
 
   def initialize
     @frequency_buckets = {}
