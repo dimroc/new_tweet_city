@@ -1,4 +1,7 @@
 class ColorStrategy
+  START_COLOR = Color::RGB.from_html("#a5cbef")
+  TARGET_COLOR = Color::RGB::DarkBlue
+
   def initialize
     @frequency_buckets = {}
   end
@@ -6,9 +9,9 @@ class ColorStrategy
   def generate(pixel_coordinates)
     frequency = generate_frequency_color(pixel_coordinates)
     ChunkyPNG::Color.rgba(
-      frequency,
-      0,
-      255 - frequency,
+      frequency.red().to_i,
+      frequency.green().to_i,
+      frequency.blue().to_i,
       255)
   end
 
@@ -24,6 +27,7 @@ class ColorStrategy
       frequency_buckets[key] = 1
     end
 
-    ((frequency_buckets[key].to_f / 20) * 255).to_i
+    percentage = frequency_buckets[key].to_f / 50 * 100
+    TARGET_COLOR.mix_with(START_COLOR, percentage)
   end
 end
