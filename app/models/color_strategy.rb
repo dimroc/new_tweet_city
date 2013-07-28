@@ -1,9 +1,7 @@
 class ColorStrategy
-  START_COLOR = Color::RGB.from_html("#3B848C")
-  TARGET_COLOR = Color::RGB.from_html("#BF2431")
-
-  def initialize
+  def initialize(profile = ColorStrategy::GreenRed.new)
     @frequency_buckets = {}
+    @profile = profile
   end
 
   def generate(pixel_coordinates)
@@ -17,7 +15,7 @@ class ColorStrategy
 
   private
 
-  attr_reader :frequency_buckets
+  attr_reader :frequency_buckets, :profile
 
   def generate_frequency_color(pixel_coordinates)
     key = "#{pixel_coordinates[0]},#{pixel_coordinates[1]}".to_sym
@@ -28,6 +26,6 @@ class ColorStrategy
     end
 
     percentage = frequency_buckets[key].to_f / 50 * 100
-    TARGET_COLOR.mix_with(START_COLOR, percentage)
+    profile.target.mix_with(profile.start, percentage)
   end
 end
