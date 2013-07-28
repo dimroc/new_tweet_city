@@ -13,6 +13,8 @@ class Tweet < ActiveRecord::Base
 
     create(
       text: tweet['text'],
+      media_url: retrieve_media_url(tweet),
+      media_type: retrieve_media_type(tweet),
       geographic_coordinates: geographic_point,
       coordinates: Mercator.to_projected(geographic_point)
     )
@@ -26,5 +28,29 @@ class Tweet < ActiveRecord::Base
   def self.within_manhattan
     envelope = Mercator::FACTORY.projection_factory.line(MANHATTAN_BOTTOM_LEFT, MANHATTAN_TOP_RIGHT).envelope
     where("ST_Intersects(ST_GeomFromText('#{envelope.as_text}', #{Mercator::SRID}), coordinates)")
+  end
+
+  private
+
+  class << self
+    def retrieve_media_url(tweet)
+      retrieve_media_element(tweet, 'url')
+    end
+
+    def retrieve_media_type(tweet)
+      retrieve_media_element(tweet, 'type')
+    end
+
+    def retrieve_media_element(tweet, key)
+      media = tweet['entities']['media']
+      type = media[0][key] if media && media[0] && media[0][key]
+
+      if type
+        type
+      else
+        retweet = tweet['retweeted_status']
+        retrieve_media_element(retweet, key) if retweet
+      end
+    end
   end
 end
