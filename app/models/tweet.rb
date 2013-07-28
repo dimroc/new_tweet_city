@@ -11,10 +11,14 @@ class Tweet < ActiveRecord::Base
     coordinates = tweet['coordinates']['coordinates']
     geographic_point = Mercator::FACTORY.point(coordinates[0], coordinates[1])
 
+    hashtags = retrieve_hashtags(tweet).join(',')
+    hashtags = nil unless hashtags.present? # Prevent empty strings '' from entering db
+
     create(
       text: tweet['text'],
       media_url: retrieve_media_url(tweet),
       media_type: retrieve_media_type(tweet),
+      hashtags: hashtags,
       geographic_coordinates: geographic_point,
       coordinates: Mercator.to_projected(geographic_point)
     )
@@ -39,6 +43,17 @@ class Tweet < ActiveRecord::Base
 
     def retrieve_media_type(tweet)
       retrieve_media_element(tweet, 'type')
+    end
+
+    def retrieve_hashtags(tweet)
+      return [] unless tweet
+
+      top = tweet['entities']['hashtags'].map do |entry|
+        entry['text']
+      end
+
+      rehashed = retrieve_hashtags(tweet['retweeted_status'])
+      (top + rehashed).uniq
     end
 
     def retrieve_media_element(tweet, key)

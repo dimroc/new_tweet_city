@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130728002457) do
+ActiveRecord::Schema.define(version: 20130728010249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20130728002457) do
     t.spatial  "geographic_coordinates", limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.string   "media_url"
     t.string   "media_type"
+    t.string   "hashtags"
   end
 
   add_index "tweets", ["coordinates"], :name => "index_tweets_on_coordinates", :spatial => true
