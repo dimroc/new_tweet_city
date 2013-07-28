@@ -1,3 +1,4 @@
+.background= image_tag last_snapshot_image(@area)
 %h1 #{@area.humanize} Snapshots
 %ul
   - @snapshots.each do |snapshot|
