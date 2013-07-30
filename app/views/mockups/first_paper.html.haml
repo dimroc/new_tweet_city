@@ -1,0 +1,27 @@
+%canvas#first_paper{resize: true}
+
+:javascript
+  // Helper to create project and view
+  var scope = paper.setup("first_paper");
+
+  with(scope) {
+    var path = new Path();
+    path.strokeColor = 'black';
+
+    var start = new Point(100, 100);
+    path.moveTo(start);
+    path.lineTo(start.add([ 200, -50 ]));
+
+    // Basic interaction with tools
+    var tool = new Tool();
+    tool.onMouseDown = function(event) {
+      path.strokeColor = 'red';
+      path.add(event.point);
+    };
+
+    // Drawing and gameloop
+    view.draw();
+    view.onFrame = function(event) {
+      path.rotate(3);
+    };
+  }
