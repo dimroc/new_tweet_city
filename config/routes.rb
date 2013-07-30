@@ -8,4 +8,6 @@ NewTweetCity::Application.routes.draw do
       end
     end
   end
+
+  get 'tests/:page', to: :page, controller: :mockups
 end
