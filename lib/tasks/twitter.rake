@@ -1,5 +1,7 @@
 namespace :twitter do
   def run_stream
+    puts "STARTED at #{DateTime.now}"
+
     while(true) do
       TwitterService.new.stream_nyc do |tweet|
         if !tweet["coordinates"]
