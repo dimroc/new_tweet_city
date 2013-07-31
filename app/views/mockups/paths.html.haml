@@ -1,0 +1,57 @@
+%canvas#paths_test{resize: true}
+
+:javascript
+  var scope = paper.setup("paths_test");
+
+  with(scope) {
+    var path = new Path();
+    path.strokeColor = 'black';
+
+    // var start = new Point(100, 100);
+    // path.moveTo(start);
+    path.add(new Point(100, 100));
+    path.lineTo(new Point(200, 200));
+    path.lineTo(new Point(0, 200));
+    path.closed = true;
+
+    path.fullySelected = true;
+    path.smooth();
+
+    var pathFromArray = new Path({
+      segments: [[200, 200], [250, 250], [200, 50]],
+      selected: false,
+      closed: true
+    });
+
+    pathFromArray.strokeColor = 'red';
+    pathFromArray.strokeWidth = 6;
+    pathFromArray.strokeCap = 'round';
+    pathFromArray.dashArray = [6, 20];
+
+    pathFromArray.fillColor = 'blue';
+
+    // Copy style
+    path.style = pathFromArray.style.clone();
+
+    path.flatten(100);
+    path.selected = false;
+
+    // Mouse selection
+    var selection = null;
+    var tool = new Tool();
+    tool.onMouseMove = function(event) {
+      if (selection) {
+        selection.fillColor = 'blue';
+        selection = null;
+      }
+
+      project.activeLayer.selected = false;
+      if (event.item) {
+        event.item.selected = true;
+        event.item.fillColor = 'purple';
+        selection = event.item;
+      }
+    };
+
+    view.draw();
+  }

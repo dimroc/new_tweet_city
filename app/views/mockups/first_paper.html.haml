@@ -5,12 +5,21 @@
   var scope = paper.setup("first_paper");
 
   with(scope) {
+    var center = new Point(100, 100);
+    var circle = new Path.Circle(center, 50);
+    circle.strokeColor = 'black';
+
     var path = new Path();
     path.strokeColor = 'black';
 
     var start = new Point(100, 100);
     path.moveTo(start);
     path.lineTo(start.add([ 200, -50 ]));
+
+    path.segments[1].selected = true;
+    path.selected = true;
+    circle.segments[1].selected = true;
+    circle.selected = true;
 
     // Basic interaction with tools
     var tool = new Tool();
@@ -22,6 +31,6 @@
     // Drawing and gameloop
     view.draw();
     view.onFrame = function(event) {
-      path.rotate(3);
+      // path.rotate(3);
     };
   }
