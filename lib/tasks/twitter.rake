@@ -1,22 +1,28 @@
 namespace :twitter do
   def run_stream
-    TwitterService.new.stream_nyc do |tweet|
-      if !tweet["coordinates"]
-        print 'M'
-        next
+    while(true) do
+      TwitterService.new.stream_nyc do |tweet|
+        if !tweet["coordinates"]
+          print 'M'
+          next
+        end
+
+        if Tweet.create_from_tweet(tweet)
+          print '.'
+        else
+          print 'F'
+        end
       end
 
-      if Tweet.create_from_tweet(tweet)
-        print '.'
-      else
-        print 'F'
-      end
+      puts "ENDED at #{DateTime.now}"
+      sleep 60
+      puts "retrying at #{DateTime.now}"
     end
   rescue => e
+    puts "ERRORED at #{DateTime.now}"
     puts e.message
-    puts "sleeping"
     sleep 60
-    puts "retrying"
+    puts "retrying at #{DateTime.now}"
     retry
   end
 
