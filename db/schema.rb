@@ -11,12 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130728010249) do
+ActiveRecord::Schema.define(version: 20130803154602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
   enable_extension "postgis_topology"
+
+  create_table "neighborhoods", force: true do |t|
+    t.string   "name",                                                null: false
+    t.string   "slug"
+    t.string   "borough",                                             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "geometry",   limit: {:srid=>3785, :type=>"geometry"}
+  end
+
+  add_index "neighborhoods", ["slug"], :name => "index_neighborhoods_on_slug", :unique => true
 
   create_table "snapshots", force: true do |t|
     t.string   "url"

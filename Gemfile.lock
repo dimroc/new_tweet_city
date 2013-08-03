@@ -68,6 +68,7 @@ GEM
       nokogiri (~> 1.5.0)
       ruby-hmac
     formatador (0.2.4)
+    friendly_id (4.0.9)
     haml (4.0.3)
       tilt
     haml-rails (0.4)
@@ -204,6 +205,7 @@ DEPENDENCIES
   color
   excon (~> 0.17.0)
   fog (~> 1.9.0)
+  friendly_id
   haml-rails
   jbuilder (~> 1.2)
   jquery-rails

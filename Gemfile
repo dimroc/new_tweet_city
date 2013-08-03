@@ -17,6 +17,8 @@ gem 'therubyracer'
 gem 'settingslogic'
 gem 'color'
 
+gem 'friendly_id'
+
 gem 'rails_12factor'
 
 # backup and dependencies
