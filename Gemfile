@@ -6,6 +6,7 @@ gem 'rails', '4.0.0'
 gem 'pg'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo'
+gem 'rgeo-shapefile'
 gem 'rgeo-geojson'
 gem 'simple_oauth'
 gem 'chunky_png'
@@ -17,7 +18,7 @@ gem 'therubyracer'
 gem 'settingslogic'
 gem 'color'
 
-gem 'friendly_id'
+gem 'friendly_id', github: 'FriendlyId/friendly_id', branch: 'master'
 
 gem 'rails_12factor'
 

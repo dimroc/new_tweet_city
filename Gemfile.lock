@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/FriendlyId/friendly_id.git
+  revision: be499130094316d36cb4761e532b11c68d24f17b
+  branch: master
+  specs:
+    friendly_id (5.0.0.alpha.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -46,6 +53,8 @@ GEM
     columnize (0.3.6)
     commonjs (0.2.6)
     daemons (1.1.9)
+    dbf (2.0.6)
+      fastercsv (~> 1.5.4)
     debugger (1.6.1)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
@@ -57,6 +66,7 @@ GEM
     excon (0.17.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    fastercsv (1.5.5)
     fog (1.9.0)
       builder
       excon (~> 0.14)
@@ -68,7 +78,6 @@ GEM
       nokogiri (~> 1.5.0)
       ruby-hmac
     formatador (0.2.4)
-    friendly_id (4.0.9)
     haml (4.0.3)
       tilt
     haml-rails (0.4)
@@ -144,6 +153,9 @@ GEM
       rgeo (>= 0.3.20)
     rgeo-geojson (0.2.3)
       rgeo (>= 0.3.7)
+    rgeo-shapefile (0.2.3)
+      dbf (>= 1.7.0)
+      rgeo (>= 0.3.3)
     ruby-hmac (0.4.0)
     sass (3.2.9)
     sass-rails (4.0.0)
@@ -205,7 +217,7 @@ DEPENDENCIES
   color
   excon (~> 0.17.0)
   fog (~> 1.9.0)
-  friendly_id
+  friendly_id!
   haml-rails
   jbuilder (~> 1.2)
   jquery-rails
@@ -219,6 +231,7 @@ DEPENDENCIES
   rails_12factor
   rgeo
   rgeo-geojson
+  rgeo-shapefile
   sass-rails (~> 4.0.0)
   sdoc
   settingslogic
