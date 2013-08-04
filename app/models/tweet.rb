@@ -34,6 +34,17 @@ class Tweet < ActiveRecord::Base
     where("ST_Intersects(ST_GeomFromText('#{envelope.as_text}', #{Mercator::SRID}), coordinates)")
   end
 
+  def self.reattach_neighborhoods!
+    Neighborhood.find_each do |hood|
+      connection.execute(<<-SQL)
+      UPDATE tweets SET neighborhood_id = #{hood.id}
+        WHERE ST_Intersects(ST_AsText(tweets.coordinates), '#{hood.geometry.as_text}')
+      SQL
+
+      puts "Finished #{hood.name}"
+    end
+  end
+
   private
 
   class << self

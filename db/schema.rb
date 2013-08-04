@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130803154602) do
+ActiveRecord::Schema.define(version: 20130803164616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,9 +48,11 @@ ActiveRecord::Schema.define(version: 20130803154602) do
     t.string   "media_url"
     t.string   "media_type"
     t.string   "hashtags"
+    t.integer  "neighborhood_id"
   end
 
   add_index "tweets", ["coordinates"], :name => "index_tweets_on_coordinates", :spatial => true
   add_index "tweets", ["created_at"], :name => "index_tweets_on_created_at"
+  add_index "tweets", ["neighborhood_id"], :name => "index_tweets_on_neighborhood_id"
 
 end

@@ -32,4 +32,9 @@ namespace :twitter do
   task :stream => :environment do
     run_stream
   end
+
+  desc "Associate all tweets with a neighborhood. Long operation."
+  task :reattach_neighborhoods => :environment do
+    Tweet.reattach_neighborhoods!
+  end
 end
