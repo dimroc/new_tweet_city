@@ -5,11 +5,15 @@ class Tweet < ActiveRecord::Base
   MANHATTAN_BOTTOM_LEFT = Mercator.to_projected(Mercator::FACTORY.point(-74.06, 40.675))
   MANHATTAN_TOP_RIGHT = Mercator.to_projected(Mercator::FACTORY.point(-73.74, 40.884))
 
+  belongs_to :neighborhood
+
   scope :chronological, -> { order(:created_at) }
 
   def self.create_from_tweet(tweet)
     coordinates = tweet['coordinates']['coordinates']
     geographic_point = Mercator::FACTORY.point(coordinates[0], coordinates[1])
+    point = Mercator.to_projected(geographic_point)
+    neighborhood = Neighborhood.intersects(point).first
 
     hashtags = retrieve_hashtags(tweet).join(',')
     hashtags = nil unless hashtags.present? # Prevent empty strings '' from entering db
@@ -20,7 +24,8 @@ class Tweet < ActiveRecord::Base
       media_type: retrieve_media_type(tweet),
       hashtags: hashtags,
       geographic_coordinates: geographic_point,
-      coordinates: Mercator.to_projected(geographic_point)
+      coordinates: point,
+      neighborhood: neighborhood
     )
   end
 
