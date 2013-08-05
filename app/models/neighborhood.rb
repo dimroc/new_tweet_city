@@ -3,6 +3,8 @@ class Neighborhood < ActiveRecord::Base
 
   friendly_id :name, use: :slugged
 
+  has_many :tweets
+
   validates_presence_of :name, :borough, :geometry, :slug
 
   class << self
