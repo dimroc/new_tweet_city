@@ -1,0 +1,36 @@
+- neighborhood = Neighborhood.find_by_slug(params[:id]) || Neighborhood.all.sample
+
+%h1= neighborhood.name
+%canvas#hood{resize: true}
+
+:javascript
+  var json_path = "#{neighborhood.slug}";
+  $.getJSON("/static/neighborhoods/" + json_path + ".json").done(function(data) {
+    var scope = paper.setup("hood");
+    var geometry = data["geometry"];
+    var points = geometry["coordinates"][0][0];
+
+    var minx = _.min(points, function(point) {
+      return point[0];
+    })[0];
+
+    var miny = _.min(points, function(point) {
+      return -point[1];
+    })[1];
+
+    var scaledPoints = _(points).map(function(point) {
+      var centered = [point[0] - minx, miny - point[1]]
+      return [centered[0] / 5, centered[1] / 5]
+    });
+
+    with(scope) {
+      var pathFromArray = new Path({
+        segments: scaledPoints,
+        selected: false,
+        closed: true
+      });
+
+      pathFromArray.strokeColor = 'black';
+      view.draw();
+    }
+  });

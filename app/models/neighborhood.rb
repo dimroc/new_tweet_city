@@ -14,4 +14,10 @@ class Neighborhood < ActiveRecord::Base
       SQL
     end
   end
+
+  def as_json(options = {})
+    hash = super(options)
+    hash.merge!('geometry' => RGeo::GeoJSON.encode(geometry)) if hash['geometry']
+    hash
+  end
 end

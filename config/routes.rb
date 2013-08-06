@@ -9,5 +9,5 @@ NewTweetCity::Application.routes.draw do
     end
   end
 
-  get 'tests/:page', to: :page, controller: :mockups
+  get 'mockups/:page/(:id)', to: :page, controller: :mockups
 end
