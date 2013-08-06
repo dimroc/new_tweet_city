@@ -156,6 +156,7 @@ GEM
     rgeo-shapefile (0.2.3)
       dbf (>= 1.7.0)
       rgeo (>= 0.3.3)
+    rinku (1.7.3)
     ruby-hmac (0.4.0)
     sass (3.2.9)
     sass-rails (4.0.0)
@@ -232,6 +233,7 @@ DEPENDENCIES
   rgeo
   rgeo-geojson
   rgeo-shapefile
+  rinku
   sass-rails (~> 4.0.0)
   sdoc
   settingslogic

@@ -1,10 +1,17 @@
-- neighborhood = Neighborhood.find_by_slug(params[:id]) || Neighborhood.all.sample
+%h1= @neighborhood.name
+%h4= link_to "Other Hoods", hoods_path
+%ul
+  - @tweets.each do |tweet|
+    %li{class: "tweet_#{tweet.id}"}
+      .text= Rinku.auto_link(tweet.text).html_safe
+      - if tweet.media_url
+        .media= image_tag tweet.media_url
+      .date= tweet.created_at
 
-%h1= neighborhood.name
-%canvas#hood{resize: true}
+%canvas#hood.background{resize: true}
 
 :javascript
-  var json_path = "#{neighborhood.slug}";
+  var json_path = "#{@neighborhood.slug}";
 
   function getMinPoint(geometry) {
     var rings = geometry["coordinates"];

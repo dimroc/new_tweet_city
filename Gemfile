@@ -19,6 +19,7 @@ gem 'settingslogic'
 gem 'color'
 
 gem 'friendly_id', github: 'FriendlyId/friendly_id', branch: 'master'
+gem 'rinku'
 
 gem 'rails_12factor'
 

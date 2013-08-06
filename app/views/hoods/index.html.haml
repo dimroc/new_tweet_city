@@ -1,0 +1,10 @@
+%table.table.table-bordered
+  %thead
+    %tr
+      - @boroughs.each do |key, value|
+        %th= key.to_s.titleize
+  %tbody{"data-no-turbolink" => ""}
+    - @length.times do |index|
+      %tr
+        - @boroughs.each do |key, value|
+          %td= link_to value[index].name, hood_path(value[index]) if value[index]
