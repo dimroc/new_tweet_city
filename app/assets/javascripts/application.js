@@ -17,4 +17,5 @@
 //= require underscore
 //= require paper
 //
+//= require_tree ./initializers/
 //= require_tree .

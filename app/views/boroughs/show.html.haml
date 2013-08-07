@@ -1,0 +1,11 @@
+%h2= @borough.titleize
+%canvas#borough.background{resize: true}
+
+:javascript
+  NTC.hoodsToLoad = [
+    '#{@neighborhoods.map(&:slug).join("','")}'
+  ];
+
+  NTC.Loader.loadHoods(NTC.hoodsToLoad).done(function(hoods) {
+    NTC.Renderer.drawHoods(hoods, 'borough');
+  });
