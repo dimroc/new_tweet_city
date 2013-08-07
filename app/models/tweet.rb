@@ -54,7 +54,7 @@ class Tweet < ActiveRecord::Base
 
   class << self
     def retrieve_media_url(tweet)
-      retrieve_media_element(tweet, 'url')
+      retrieve_media_element(tweet, 'media_url')
     end
 
     def retrieve_media_type(tweet)
