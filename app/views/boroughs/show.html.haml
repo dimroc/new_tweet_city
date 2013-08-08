@@ -3,8 +3,10 @@
 
 %canvas#borough.hood.span8
 .span7
-%ul.tweets.span4
-  = render partial: 'tweet', collection: @tweets
+.tweets.span4
+  = image_tag 'bouncer.gif', class: 'bouncer'
+  %ul
+    = render partial: 'tweet', collection: @tweets
 
 :javascript
   NTC.hoodsToLoad = [
@@ -13,5 +15,5 @@
 
   NTC.Loader.loadHoods(NTC.hoodsToLoad).done(function(hoods) {
     NTC.Renderer.drawHoods(hoods, 'borough');
-    NTC.Listener.listenToTweets('.tweets', hoods);
+    NTC.Listener.listenToTweets('.tweets ul', hoods);
   });

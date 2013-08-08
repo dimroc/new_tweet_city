@@ -2,9 +2,17 @@ NTC.Listener = {
   listenToTweets: function(selector, hoods) {
 
     NTC.channel.bind('tweet', function(data) {
-      if(NTC.Listener.belongsToHood(data.neighborhood, hoods)) {
+      var hood = NTC.Listener.belongsToHood(data.neighborhood, hoods);
+      if(hood) {
+        NTC.Listener.colorHood(hood);
         $(selector).prepend(data.body);
       }
+    });
+  },
+
+  colorHood: function(hood) {
+    _(hood.paths).each(function(path) {
+      path.fillColor = 'blue';
     });
   },
 

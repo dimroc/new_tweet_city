@@ -1,4 +1,5 @@
 %li{class: ["tweet", "tweet_#{tweet.id}"]}
+  %i{class: %w(icon-twitter)}
   .neighborhood.label= tweet.neighborhood.name
   .date.label.label-success #{l(tweet.created_at, format: :long)}
   .body

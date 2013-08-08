@@ -38,7 +38,9 @@ NTC.Renderer = {
         closed: true
       });
 
-      pathFromArray.strokeColor = 'black';
+      pathFromArray.strokeColor = 'white';
+      pathFromArray.fillColor = 'black';
+      return pathFromArray;
     }
   },
 
@@ -46,8 +48,8 @@ NTC.Renderer = {
     var rings = geometry["coordinates"];
     minPoint = minPoint || this.getMinPointFromGeom(geometry);
 
-    _(rings).each(function(ring) {
-      this.drawRing(scope, ring[0], minPoint);
+    return _(rings).map(function(ring) {
+      return this.drawRing(scope, ring[0], minPoint);
     }, this);
   },
 
@@ -56,8 +58,8 @@ NTC.Renderer = {
     var geometries = _(hoods).map(function(hood) { return hood.geometry });
     var minPoint = this.getMinPointForAll(geometries);
 
-    _(geometries).each(function(geometry) {
-      this.drawHood(scope, geometry, minPoint);
+    _(hoods).each(function(hood) {
+      hood.paths = this.drawHood(scope, hood.geometry, minPoint);
     }, this);
 
     window.onresize = function() {
@@ -70,6 +72,12 @@ NTC.Renderer = {
       }
     }
 
+    scope.view.onFrame = function(event) {
+      _(scope.project.layers[0]._children).each(function(path) {
+        if(path.fillColor.blue != 0)
+          path.fillColor.blue -= 0.005;
+      });
+    };
     scope.view.draw();
   }
 };
