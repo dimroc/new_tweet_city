@@ -8,6 +8,10 @@ defaults: &defaults
     s3_key: <%= ENV['AWS_S3_KEY'] %>
     s3_secret: <%= ENV['AWS_S3_SECRET'] %>
     bucket: <%= ENV['AWS_BUCKET'] %>
+  pusher:
+    app_id: <%= ENV['PUSHER_APP_ID'] %>
+    key: <%= ENV['PUSHER_KEY'] %>
+    secret: <%= ENV['PUSHER_SECRET'] %>
 
 development:
   <<: *defaults

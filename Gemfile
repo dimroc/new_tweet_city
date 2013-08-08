@@ -17,6 +17,7 @@ gem 'less-rails'
 gem 'therubyracer'
 gem 'settingslogic'
 gem 'color'
+gem 'pusher'
 
 gem 'friendly_id', github: 'FriendlyId/friendly_id', branch: 'master'
 gem 'rinku'
