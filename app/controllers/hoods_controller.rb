@@ -12,6 +12,6 @@ class HoodsController < ApplicationController
 
   def show
     @neighborhood = Neighborhood.find_by_slug!(params[:id])
-    @tweets = @neighborhood.tweets.order("created_at DESC").first(40)
+    @tweets = @neighborhood.tweets.descending.first(40)
   end
 end

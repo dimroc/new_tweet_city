@@ -8,6 +8,7 @@ class Tweet < ActiveRecord::Base
   belongs_to :neighborhood
 
   scope :chronological, -> { order(:created_at) }
+  scope :descending, -> { order('created_at DESC') }
 
   def self.create_from_tweet(tweet)
     coordinates = tweet['coordinates']['coordinates']
@@ -27,6 +28,10 @@ class Tweet < ActiveRecord::Base
       coordinates: point,
       neighborhood: neighborhood
     )
+  end
+
+  def self.for_borough(borough)
+    Tweet.where(neighborhood_id: Neighborhood.where(borough: borough).map(&:id))
   end
 
   def self.within_nyc

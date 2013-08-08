@@ -19,6 +19,10 @@
     = javascript_include_tag "application"
 
   %body{class: controller_and_action}
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          = yield :top
     .container
       .row
         .span12

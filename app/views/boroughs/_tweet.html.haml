@@ -1,0 +1,7 @@
+%li{class: ["tweet", "tweet_#{tweet.id}"]}
+  .neighborhood.label= tweet.neighborhood.name
+  .date.text-success #{l(tweet.created_at, format: :long)}
+  .body
+    %blockquote.text= Rinku.auto_link(tweet.text).html_safe
+    - if tweet.media_url
+      .media= image_tag tweet.media_url
