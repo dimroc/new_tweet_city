@@ -60,6 +60,16 @@ NTC.Renderer = {
       this.drawHood(scope, geometry, minPoint);
     }, this);
 
+    window.onresize = function() {
+      var width = $("#"+id).width();
+      var height = $("#"+id).height();
+      console.log("resizing", id, width, height);
+      if(width) {
+        scope.view.viewSize = [width, height];
+        scope.view.draw();
+      }
+    }
+
     scope.view.draw();
   }
 };
