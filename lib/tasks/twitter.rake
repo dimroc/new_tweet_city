@@ -3,14 +3,18 @@ namespace :twitter do
     puts "STARTED at #{DateTime.now}"
 
     while(true) do
-      TwitterService.new.stream_nyc do |tweet|
-        if !tweet["coordinates"]
+      TwitterService.new.stream_nyc do |hash|
+        if !hash["coordinates"]
           print 'M'
           next
         end
 
-        if Tweet.create_from_tweet(tweet)
+        tweet = Tweet.create_from_tweet(hash)
+        if tweet && tweet.neighborhood
+          PusherService.broadcast_tweet(tweet)
           print '.'
+        elsif tweet
+          print 'S'
         else
           print 'F'
         end

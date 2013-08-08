@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require underscore
 //= require paper
+//= require pusher
 //
 //= require_tree ./initializers/
 //= require_tree .

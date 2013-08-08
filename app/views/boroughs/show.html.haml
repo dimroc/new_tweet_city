@@ -13,4 +13,5 @@
 
   NTC.Loader.loadHoods(NTC.hoodsToLoad).done(function(hoods) {
     NTC.Renderer.drawHoods(hoods, 'borough');
+    NTC.Listener.listenToTweets('.tweets', hoods);
   });
