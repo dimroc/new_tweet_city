@@ -19,7 +19,7 @@
     = javascript_include_tag "application"
 
   %body{class: controller_and_action}
-    .navbar.navbar-fixed-top
+    .navbar.navbar-fixed-top{"data-no-turbolink" => ""}
       .navbar-inner
         .container
           %h6.home= link_to "NEW TWEET CITY HOME", root_path
