@@ -2,7 +2,7 @@ class SnapshotsController < ApplicationController
   before_filter :safely_assign_area
 
   def index
-    @snapshots = Snapshot.public_send(@area).ascending
+    @snapshots = Snapshot.public_send(@area).descending
   end
 
   def show

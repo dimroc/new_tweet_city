@@ -1,7 +1,8 @@
 - content_for :top do
   %h1 #{@area.humanize} Snapshots
 
-.background= image_tag last_snapshot_image(@area)
-%ul{"data-no-turbolink" => ""}
+%ol{"data-no-turbolink" => ""}
   - @snapshots.each do |snapshot|
     %li= link_to "#{l snapshot.begins_at, format: :human} - #{l snapshot.ends_at, format: :human}", snapshot_path(@area, snapshot)
+
+.background.span12= image_tag last_snapshot_image(@area)

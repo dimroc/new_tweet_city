@@ -1,6 +1,6 @@
 %li{class: ["tweet", "tweet_#{tweet.id}"]}
   %i{class: %w(icon-twitter)}
-  .neighborhood.label= tweet.neighborhood.name
+  .neighborhood.label.label-info= tweet.neighborhood.name
   .date.label.label-success #{l(tweet.created_at, format: :long)}
   .body
     %blockquote.text= Rinku.auto_link(tweet.text, :all, 'target="_blank"').html_safe

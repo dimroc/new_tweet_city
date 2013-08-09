@@ -1,6 +1,10 @@
 .tweet {
   background-color: rgba(255,255,255,0.9);
   margin-bottom: 10px;
+
+  &:first-child .neighborhood {
+    background-color: blue;
+  }
 }
 
 .tweets {

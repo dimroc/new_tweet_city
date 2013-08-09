@@ -4,6 +4,7 @@ class Snapshot < ActiveRecord::Base
   end
 
   scope :ascending, -> { order("ends_at ASC") }
+  scope :descending, -> { order("ends_at DESC") }
 
   def update_image!
     upload = SnapshotFactory.new(area).generate_image(begins_at, ends_at)

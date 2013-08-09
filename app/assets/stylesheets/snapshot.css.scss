@@ -1,7 +1,7 @@
 .floating-header {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;
+  top: 100px;
+  background-color: rgba(255,255,255,0.5);
 }
 
 .background {
@@ -10,3 +10,24 @@
   z-index: -1;
 }
 
+.holder {
+  position: fixed;
+}
+
+.snapshots.index {
+  ul, ol {
+    margin-top: 80px;
+    display: inline-block;
+
+    li {
+      border: solid 1px #ccc;
+      background-color: rgba(255,255,255,0.9);
+      margin: 5px;
+      padding: 10px;
+    }
+
+    li:first-child {
+      background-color: rgba(160,160,160,0.8);
+    }
+  }
+}

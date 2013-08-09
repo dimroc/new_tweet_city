@@ -1,9 +1,11 @@
 - content_for :top do
   %h2= @borough.titleize
+  - (Borough::NAMES - [@borough]).each do |borough|
+    %h5= link_to borough, borough_path(borough.downcase)
 
 %canvas#borough.hood.span8
-.span7
-.tweets.span4
+.span6
+.tweets.span5
   = image_tag 'bouncer.gif', class: 'bouncer'
   %ul
     = render partial: 'tweet', collection: @tweets

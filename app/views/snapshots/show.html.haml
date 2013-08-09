@@ -1,26 +1,29 @@
-.floating-header{"data-no-turbolink" => ""}
+- content_for :top do
   %h1.area= @area.humanize
-  .change_area
-    - if @area == "manhattan"
-      = link_to "See NYC", last_snapshots_path(:nyc)
-    - else
-      = link_to "See Manhattan", last_snapshots_path(:manhattan)
 
-  .begins From: #{l @snapshot.begins_at, format: :human}
-  .ends Until : #{l @snapshot.ends_at, format: :human}
-  .count= "Tweets: #{number_with_delimiter @snapshot.tweet_count}"
-  .navigation
-    - if @previous
-      = link_to snapshot_path(@area, @previous) do
+.holder
+  .floating-header{"data-no-turbolink" => ""}
+    .change_area
+      - if @area == "manhattan"
+        = link_to "See NYC", last_snapshots_path(:nyc)
+      - else
+        = link_to "See Manhattan", last_snapshots_path(:manhattan)
+
+    .begins From: #{l @snapshot.begins_at, format: :human}
+    .ends Until : #{l @snapshot.ends_at, format: :human}
+    .count= "Tweets: #{number_with_delimiter @snapshot.tweet_count}"
+    .navigation
+      - if @previous
+        = link_to snapshot_path(@area, @previous) do
+          %i{class: "icon-chevron-left"}
+      - else
         %i{class: "icon-chevron-left"}
-    - else
-      %i{class: "icon-chevron-left"}
 
-    - if @next
-      = link_to snapshot_path(@area, @next) do
+      - if @next
+        = link_to snapshot_path(@area, @next) do
+          %i{class: "icon-chevron-right"}
+      - else
         %i{class: "icon-chevron-right"}
-    - else
-      %i{class: "icon-chevron-right"}
 
 
 = image_tag @snapshot.url
