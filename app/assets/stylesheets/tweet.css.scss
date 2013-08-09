@@ -2,14 +2,47 @@
   background-color: rgba(255,255,255,0.9);
   margin-bottom: 10px;
 
-  &:first-child .neighborhood {
-    background-color: blue;
+  &:first-child {
+    .neighborhood {
+      background-color: blue;
+      font-size: 18px;
+      padding: 5px;
+
+    }
+  }
+
+  .neighborhood a {
+    color: white;
+  }
+
+  .profile_image {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 10px;
+    border: solid 1px #ccc;
+  }
+
+  .content {
+    display: inline-block;
+    width: 370px;
+  }
+
+  .body {
+    margin-left: 16px;
+  }
+
+  h5 {
+    margin-bottom: 5px;
   }
 }
 
 .tweets {
   margin-top: 100px;
   list-style-type: none;
+
+  ul {
+    list-style-type: none;
+  }
 }
 
 .bouncer {

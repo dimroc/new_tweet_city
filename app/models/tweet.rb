@@ -20,6 +20,8 @@ class Tweet < ActiveRecord::Base
     hashtags = nil unless hashtags.present? # Prevent empty strings '' from entering db
 
     create(
+      screen_name: tweet['user']['screen_name'],
+      profile_image_url: tweet['user']['profile_image_url'],
       text: tweet['text'],
       media_url: retrieve_media_url(tweet),
       media_type: retrieve_media_type(tweet),
