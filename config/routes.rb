@@ -1,5 +1,5 @@
 NewTweetCity::Application.routes.draw do
-  root 'snapshots#last'
+  root 'home#index'
 
   resources :hoods, only: [:index, :show]
   resources :boroughs, only: [:show]
