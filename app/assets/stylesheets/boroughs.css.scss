@@ -5,11 +5,19 @@
       margin: 10px;
     }
   }
-}
 
-.hood {
-  position: fixed;
-  top: 100px;
-  height: 1000px;
-  vertical-align: top;
+  .absolute {
+    top: 70px;
+    height: 100%;
+    z-index: -1;
+    overflow-x: hidden;
+
+    canvas {
+      height: 100%;
+    }
+  }
+
+  .tweets {
+    margin-left: 640px;
+  }
 }

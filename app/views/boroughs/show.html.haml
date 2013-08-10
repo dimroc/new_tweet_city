@@ -3,9 +3,10 @@
   - (Borough::NAMES - [@borough]).each do |borough|
     %h5= link_to borough, borough_path(borough.downcase)
 
-%canvas#borough.hood.span8
-.span6
-.tweets.span5
+.absolute
+  %canvas#borough.relative
+
+.tweets
   = image_tag 'bouncer.gif', class: 'bouncer'
   %ul
     = render partial: 'tweet', collection: @tweets

@@ -2,6 +2,13 @@
   table {
     margin-top: 60px;
   }
+
+  .hood {
+    position: fixed;
+    margin-top: 70px;
+    z-index: -1;
+    height: 100%;
+  }
 }
 
 .hoods.show .navbar {

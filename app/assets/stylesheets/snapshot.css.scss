@@ -1,6 +1,5 @@
 .floating-header {
   position: relative;
-  top: 100px;
   background-color: rgba(255,255,255,0.5);
 }
 
@@ -10,8 +9,14 @@
   z-index: -1;
 }
 
-.holder {
-  position: fixed;
+.snapshots {
+  > .container {
+    margin-top: 70px;
+
+    img {
+      max-height: 90%;
+    }
+  }
 }
 
 .snapshots.index {
