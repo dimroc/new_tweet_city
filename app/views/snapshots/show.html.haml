@@ -1,14 +1,16 @@
 - content_for :top do
   %h1.area= @area.humanize
+  .change_area
+    - if @area == "manhattan"
+      = link_to "List of Manhattan Snapshots", snapshots_path(:manhattan)
+      = link_to "Switch to all NYC", last_snapshots_path(:nyc)
+    - else
+      = link_to "List of NYC Snapshots", snapshots_path(:nyc)
+      = link_to "Switch to Manhattan", last_snapshots_path(:manhattan)
+
 
 .absolute
   .floating-header{"data-no-turbolink" => ""}
-    .change_area
-      - if @area == "manhattan"
-        = link_to "See NYC", last_snapshots_path(:nyc)
-      - else
-        = link_to "See Manhattan", last_snapshots_path(:manhattan)
-
     .begins From: #{l @snapshot.begins_at, format: :human}
     .ends Until : #{l @snapshot.ends_at, format: :human}
     .count= "Tweets: #{number_with_delimiter @snapshot.tweet_count}"

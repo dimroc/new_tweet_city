@@ -2,67 +2,18 @@
   %h1= @neighborhood.name
   %h4= link_to "Other Hoods", hoods_path
 
-%canvas#hood.hood.span7
-.span7
-%ul.tweets.span4
-  = render partial: 'boroughs/tweet', collection: @tweets
+.hood
+  %canvas#hood
+.tweets
+  = image_tag 'bouncer.gif', class: 'bouncer'
+  %ul
+    = render partial: 'boroughs/tweet', collection: @tweets
 
 :javascript
   var json_path = "#{@neighborhood.slug}";
+  NTC.hoodsToLoad = [json_path];
 
-  function getMinPoint(geometry) {
-    var rings = geometry["coordinates"];
-    var minx = 99999999;
-    var miny = 0;
-
-    _(rings).each(function(ring) {
-      var points = ring[0];
-      var x = _.min(points, function(point) {
-        return point[0];
-      })[0];
-
-      var y = _.min(points, function(point) {
-        return -point[1];
-      })[1];
-
-      if(minx > x) minx = x;
-      if(miny < y) miny = y;
-    });
-
-    return [minx, miny];
-  };
-
-  function drawRing(scope, points, minPoint) {
-    console.log("Drawing ring", minPoint);
-    var scaledPoints = _(points).map(function(point) {
-      var centered = [point[0] - minPoint[0], minPoint[1] - point[1]]
-      return [centered[0] / 5, centered[1] / 5]
-    });
-
-    with(scope) {
-      var pathFromArray = new Path({
-        segments: scaledPoints,
-        selected: false,
-        closed: true
-      });
-
-      pathFromArray.strokeColor = 'black';
-    }
-  };
-
-  function drawHood(scope, geometry) {
-    var rings = geometry["coordinates"];
-    var minPoint = getMinPoint(geometry);
-
-    _(rings).each(function(ring) {
-      drawRing(scope, ring[0], minPoint);
-    });
-  };
-
-  $.getJSON("/static/neighborhoods/" + json_path + ".json").done(function(data) {
-    var scope = paper.setup("hood");
-    var geometry = data["geometry"];
-
-    drawHood(scope, geometry);
-    scope.view.draw();
+  NTC.Loader.loadHoods(NTC.hoodsToLoad).done(function(hoods) {
+    NTC.Renderer.drawHoods(hoods, 'hood', 1/10);
+    NTC.Listener.listenToTweets('ul.tweets', hoods);
   });

@@ -3,10 +3,19 @@
     margin-top: 60px;
   }
 
-  .hood {
-    position: fixed;
-    margin-top: 70px;
-    z-index: -1;
+  .tweets {
+    margin-left: 500px;
+  }
+}
+
+.hood {
+  position: absolute;
+  top: 70px;
+  height: 100%;
+  z-index: -1;
+  overflow-x: hidden;
+
+  canvas {
     height: 100%;
   }
 }

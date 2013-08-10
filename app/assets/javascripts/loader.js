@@ -4,8 +4,16 @@ NTC.Loader = {
     var all = this.getAll(paths);
     var dfd = $.Deferred();
 
+    var isMany = all.length > 1;
     $.when.apply($, all).done(function() {
-      var retrieved = _(arguments).map(function(arg) { return arg[0] });
+      var retrieved = null;
+
+      if(isMany) {
+        retrieved = _(arguments).map(function(arg) { return arg[0]; });
+      } else {
+        retrieved = [arguments[0]];
+      }
+
       dfd.resolve(retrieved);
     });
 

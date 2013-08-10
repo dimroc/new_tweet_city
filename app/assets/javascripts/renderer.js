@@ -25,10 +25,10 @@ NTC.Renderer = {
     return this.getMinPointFromPoints(minPoints);
   },
 
-  drawRing: function(scope, points, minPoint) {
+  drawRing: function(scope, points, minPoint, scale) {
     var scaledPoints = _(points).map(function(point) {
       var centered = [point[0] - minPoint[0], minPoint[1] - point[1]]
-      return [centered[0] / 40, centered[1] / 40]
+      return [centered[0] * scale, centered[1] * scale]
     });
 
     with(scope) {
@@ -44,28 +44,29 @@ NTC.Renderer = {
     }
   },
 
-  drawHood: function(scope, geometry, minPoint) {
+  drawHood: function(scope, geometry, minPoint, scale) {
     var rings = geometry["coordinates"];
     minPoint = minPoint || this.getMinPointFromGeom(geometry);
 
     return _(rings).map(function(ring) {
-      return this.drawRing(scope, ring[0], minPoint);
+      return this.drawRing(scope, ring[0], minPoint, scale);
     }, this);
   },
 
-  drawHoods: function(hoods, id) {
+  drawHoods: function(hoods, id, scale) {
     var scope = paper.setup(id);
     var geometries = _(hoods).map(function(hood) { return hood.geometry });
     var minPoint = this.getMinPointForAll(geometries);
+    scale = scale || 1/40;
 
     _(hoods).each(function(hood) {
-      hood.paths = this.drawHood(scope, hood.geometry, minPoint);
+      hood.paths = this.drawHood(scope, hood.geometry, minPoint, scale);
     }, this);
 
     window.onresize = function() {
       var width = $("#"+id).width();
       var height = $("#"+id).height();
-      console.log("resizing", id, width, height);
+
       if(width) {
         scope.view.viewSize = [width, height];
         scope.view.draw();
