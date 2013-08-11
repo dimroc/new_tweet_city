@@ -19,11 +19,18 @@
     = javascript_include_tag "application"
 
   %body{class: controller_and_action}
-    .navbar{"data-no-turbolink" => ""}
+    .navbar.navbar-inverse{"data-no-turbolink" => ""}
       .navbar-inner
         .container
-          %h6.home= link_to "NEW TWEET CITY HOME", root_path
-          = yield :top
+          %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to 'New Tweet City', root_path, class: 'brand'
+          .container.nav-collapse
+            %ul.nav
+              = yield :top
+
     .container
       .row
         .span12

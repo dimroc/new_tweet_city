@@ -1,5 +1,6 @@
 - content_for :top do
-  %h1 #{@area.humanize} Snapshots
+  %li.active= link_to "#{@area.humanize} Snapshots", snapshots_path(@area)
+
 .absolute
   %ol{"data-no-turbolink" => ""}
     - @snapshots.each do |snapshot|

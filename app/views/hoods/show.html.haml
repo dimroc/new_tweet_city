@@ -1,7 +1,7 @@
 - content_for :top do
-  %h1= @neighborhood.name
-  %h4= link_to @neighborhood.borough, borough_path(@neighborhood.borough)
-  %h4= link_to "Other Hoods", hoods_path
+  %li.active= link_to @neighborhood.name
+  %li= link_to @neighborhood.borough, borough_path(@neighborhood.borough)
+  %li= link_to "Other Hoods", hoods_path
 
 .hood
   %canvas#hood
