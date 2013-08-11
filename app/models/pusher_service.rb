@@ -9,8 +9,15 @@ class PusherService
 
     def render_tweet(tweet)
       view = ActionView::Base.new(ActionController::Base.view_paths)
-      view.extend Rails.application.routes.url_helpers
-      view.extend ApplicationHelper
+      view.class_eval do
+        include Rails.application.routes.url_helpers
+        include ApplicationHelper
+
+        def protect_against_forgery?
+          false
+        end
+      end
+
       view.render(partial: 'boroughs/tweet', locals: { tweet: tweet })
     end
   end
