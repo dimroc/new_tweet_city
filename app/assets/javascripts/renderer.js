@@ -44,12 +44,14 @@ NTC.Renderer = {
     }
   },
 
-  drawHood: function(scope, geometry, minPoint, scale) {
-    var rings = geometry["coordinates"];
-    minPoint = minPoint || this.getMinPointFromGeom(geometry);
+  drawHood: function(scope, hood, minPoint, scale) {
+    var rings = hood.geometry.coordinates;
+    minPoint = minPoint || this.getMinPointFromGeom(hood.geometry);
 
     return _(rings).map(function(ring) {
-      return this.drawRing(scope, ring[0], minPoint, scale);
+      var path = this.drawRing(scope, ring[0], minPoint, scale);
+      path.data = hood;
+      return path
     }, this);
   },
 
@@ -60,8 +62,10 @@ NTC.Renderer = {
     scale = scale || 1/40;
 
     _(hoods).each(function(hood) {
-      hood.paths = this.drawHood(scope, hood.geometry, minPoint, scale);
+      hood.paths = this.drawHood(scope, hood, minPoint, scale);
     }, this);
+
+    this._handleMouseEvents(scope, id);
 
     window.onresize = function() {
       var width = $("#"+id).width();
@@ -79,6 +83,33 @@ NTC.Renderer = {
           path.fillColor.blue -= 0.005;
       });
     };
+
     scope.view.draw();
+  },
+
+  _handleMouseEvents: function(scope, id) {
+    var tool = new scope.Tool();
+    var selection = null;
+    var loading = false;
+
+    tool.onMouseMove = function(event) {
+      if (event.item) {
+        if(selection && selection != event.item) selection.fillColor = 'black';
+        selection = event.item;
+        selection.fillColor = 'green';
+        if (!loading) $("#" + id).css("cursor", "pointer");
+      } else {
+        if(selection) selection.fillColor = 'black';
+        $("#" + id).css("cursor", "default");
+        selection = null;
+      }
+    };
+
+    tool.onMouseUp = function(event) {
+      var slug = event.item.data.slug;
+      loading = true;
+      $("canvas").css("cursor", "wait");
+      window.location.href = "/hoods/" + slug;
+    };
   }
 };
