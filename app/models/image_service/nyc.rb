@@ -1,7 +1,7 @@
 class ImageService::Nyc < ImageService
   def initialize(options={})
-    @topright = Tweet::NYC_TOP_RIGHT
-    @bottomleft = Tweet::NYC_BOTTOM_LEFT
+    @topright = Area.nyc_top_right
+    @bottomleft = Area.nyc_bottom_left
     super(options)
   end
 
