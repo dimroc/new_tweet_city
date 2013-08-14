@@ -1,3 +1,5 @@
 class Borough
-  NAMES = Neighborhood.all.map(&:borough).uniq
+  def self.names
+    Neighborhood.all.map(&:borough).uniq
+  end
 end

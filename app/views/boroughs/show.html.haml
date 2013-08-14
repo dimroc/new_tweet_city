@@ -1,5 +1,5 @@
 - content_for :top do
-  - Borough::NAMES.each do |borough|
+  - Borough.names.each do |borough|
     - klass = (borough == @borough) ? "active" : ""
     %li{class: klass}= link_to borough, borough_path(borough.downcase)
 
