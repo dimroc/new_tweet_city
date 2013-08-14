@@ -1,3 +1,5 @@
 <% raise StandardError, "Cannot generate pusher.js without PUSHER_KEY" unless ENV['PUSHER_KEY'] %>
-NTC.pusher = new Pusher('<%= ENV['PUSHER_KEY'] %>');
-NTC.channel = NTC.pusher.subscribe('global');
+if('undefined' !== typeof(Pusher)) {
+  NTC.pusher = new Pusher('<%= ENV['PUSHER_KEY'] %>');
+  NTC.channel = NTC.pusher.subscribe('global');
+}
