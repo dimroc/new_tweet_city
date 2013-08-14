@@ -19,6 +19,7 @@
 
         h2 {
           background-color: rgba(255,255,255,0.4);
+          vertical-align: top;
           display: inline-block;
           padding: 20px;
           margin: 0;
@@ -36,8 +37,8 @@
       background-image: image_url("TweetsAsPixels2.png");
     }
 
-    .hoods {
-      background-image: image_url("WestVillage.png");
+    .building_perimeters {
+      background-image: image_url("NycBuildingPerimeters.png");
       background-repeat: no-repeat;
       background-position: right bottom;
       background-size: auto 250px;

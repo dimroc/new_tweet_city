@@ -1,12 +1,20 @@
-%h1 New Tweet City
+%h1 dimroc
 
 %ul.span12
-  %li.boroughs
-    = link_to borough_path("manhattan") do
-      %h2 Window into your Borough
+  %li.webgl
+    = link_to "http://dimroc.github.io/reveal.js-threejs/", target: "_blank" do
+      %h2 WebGL with Three JS slides
+      %canvas#webgl
+      %canvas#webgl2
   %li.snapshots
-    = link_to last_snapshots_path("manhattan") do
+    = link_to last_snapshots_path("manhattan"), target: "_blank" do
       %h2 Tweets as Pixels
-  %li.hoods
-    = link_to hood_path("west-village") do
-      %h2 Window into your Neighborhood
+  %li.building_perimeters
+    = link_to "http://dimroc.github.io/nyc_building_perimeters/#/neighborhoods/lower-east-side", target: "_blank" do
+      %h2 NYC Building Perimeters in 3D
+  %li.boroughs
+    = link_to borough_path("manhattan"), target: "_blank" do
+      %h2 Real-Time Tweets from your Borough
+
+:javascript
+  NTC.gfx.renderSpinningCube("webgl");
