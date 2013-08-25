@@ -1,5 +1,8 @@
 - content_for :top do
   %li.active= link_to "#{@area.humanize} Snapshots", snapshots_path(@area)
+  - (Area::NAMES - [@area]).each do |area|
+    %li= link_to "#{area.humanize} Snapshots", snapshots_path(area)
+  %li= link_to "Inspired by Miguel Rios' Geography of Tweets", "https://blog.twitter.com/2013/geography-tweets-3"
 
 .absolute
   %ol{"data-no-turbolink" => ""}
