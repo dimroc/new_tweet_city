@@ -13,6 +13,14 @@ class Neighborhood < ActiveRecord::Base
         ST_Intersects(ST_AsText(neighborhoods.geometry), ?)
       SQL
     end
+
+    def lower_east_side
+      find_by_name("Lower East Side")
+    end
+
+    def west_village
+      find_by_name("West Village")
+    end
   end
 
   def as_json(options = {})

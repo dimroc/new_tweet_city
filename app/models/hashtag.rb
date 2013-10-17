@@ -1,4 +1,5 @@
 class Hashtag < ActiveRecord::Base
+  belongs_to :neighborhood
   belongs_to :tweet
 
   def self.backpopulate(start_date)
