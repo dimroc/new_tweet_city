@@ -12,6 +12,6 @@ namespace :hashtag do
   end
 
   task :analyze_week => :environment do
-    HashtagAnalytics.generate('week')
+    HashtagAnalytics.generate('week', 10)
   end
 end
