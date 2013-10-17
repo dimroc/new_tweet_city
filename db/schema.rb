@@ -11,12 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130809114644) do
+ActiveRecord::Schema.define(version: 20131017034530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
   enable_extension "postgis_topology"
+
+  create_table "hashtag_analytics", force: true do |t|
+    t.string   "period"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "hashtag_analytics_entries", force: true do |t|
+    t.integer "hashtag_analytics_id"
+    t.string  "term"
+    t.integer "count"
+  end
+
+  add_index "hashtag_analytics_entries", ["hashtag_analytics_id"], :name => "index_hashtag_analytics_entries_on_hashtag_analytics_id"
+
+  create_table "hashtags", force: true do |t|
+    t.integer  "tweet_id"
+    t.string   "term"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hashtags", ["created_at"], :name => "index_hashtags_on_created_at"
+  add_index "hashtags", ["term"], :name => "index_hashtags_on_term"
+  add_index "hashtags", ["tweet_id"], :name => "index_hashtags_on_tweet_id"
 
   create_table "neighborhoods", force: true do |t|
     t.string   "name",                                                null: false
