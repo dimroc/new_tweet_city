@@ -9,7 +9,12 @@ class Hashtag < ActiveRecord::Base
 
   def self.create_from_tweet(tweet)
     tweet.hashtags.split(',').each do |term|
-      Hashtag.create(tweet_id: tweet.id, term: term, created_at: tweet.created_at)
+      Hashtag.create(
+        tweet_id: tweet.id,
+        neighborhood_id: tweet.neighborhood_id,
+        borough: tweet.neighborhood.try(:borough),
+        term: term,
+        created_at: tweet.created_at)
       print '.'
     end
   end

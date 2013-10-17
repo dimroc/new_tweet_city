@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131017034530) do
+ActiveRecord::Schema.define(version: 20131017050454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 20131017034530) do
     t.string   "period"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "neighborhood_id"
+    t.string   "borough"
   end
 
   create_table "hashtag_analytics_entries", force: true do |t|
@@ -37,9 +39,12 @@ ActiveRecord::Schema.define(version: 20131017034530) do
     t.string   "term"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "neighborhood_id"
+    t.string   "borough"
   end
 
   add_index "hashtags", ["created_at"], :name => "index_hashtags_on_created_at"
+  add_index "hashtags", ["neighborhood_id"], :name => "index_hashtags_on_neighborhood_id"
   add_index "hashtags", ["term"], :name => "index_hashtags_on_term"
   add_index "hashtags", ["tweet_id"], :name => "index_hashtags_on_tweet_id"
 

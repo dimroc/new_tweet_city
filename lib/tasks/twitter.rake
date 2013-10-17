@@ -10,8 +10,8 @@ namespace :twitter do
         end
 
         tweet = Tweet.create_from_tweet(hash)
-        Hashtag.create_from_tweet(tweet) if tweet.hashtags.present?
         if tweet && tweet.neighborhood
+          Hashtag.create_from_tweet(tweet) if tweet.hashtags.present?
           PusherService.broadcast_tweet(tweet)
           print '.'
         elsif tweet
