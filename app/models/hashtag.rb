@@ -1,4 +1,6 @@
 class Hashtag < ActiveRecord::Base
+  belongs_to :tweet
+
   def self.backpopulate(start_date)
     Tweet.where("hashtags IS NOT NULL AND hashtags != ''").where('created_at > ?', start_date).find_each do |tweet|
       create_from_tweet(tweet)
