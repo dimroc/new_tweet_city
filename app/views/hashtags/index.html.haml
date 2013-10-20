@@ -1,0 +1,17 @@
+%table
+  %th
+    %td Period
+    - Borough.names.each do |borough|
+      %td= borough
+  %tr
+    %td Hour
+    - Borough.names.each do |borough|
+      %td= analytics(@hours[borough])
+  %tr
+    %td Day
+    - Borough.names.each do |borough|
+      %td= analytics(@days[borough])
+  %tr
+    %td Week
+    - Borough.names.each do |borough|
+      %td= analytics(@weeks[borough])

@@ -5,6 +5,9 @@ class HashtagAnalytics < ActiveRecord::Base
     class_name: "HashtagAnalyticsEntry",
     dependent: :destroy
 
+  scope :borough, -> (borough) { where(borough: borough) }
+  scope :period, -> (period) { where(period: period) }
+
   def self.generate_for_a_neighborhood(neighborhood, period, entry_count = 5)
     start_date = 1.send(period).ago
     analytics = HashtagAnalytics.new(period: period, neighborhood: neighborhood)

@@ -7,4 +7,13 @@ module ApplicationHelper
   def last_snapshot_image(area)
     Snapshot.public_send(area).ascending.last.url
   end
+
+  def analytics(hashtag_analytics)
+    rval = []
+    hashtag_analytics.entries.first(3).each_with_index do |entry, index|
+      rval << content_tag(:div, "#{index}) Term: #{entry.term} Count: #{entry.count}")
+    end
+
+    rval.join.html_safe
+  end
 end

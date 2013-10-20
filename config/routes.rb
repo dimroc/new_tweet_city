@@ -3,6 +3,7 @@ NewTweetCity::Application.routes.draw do
 
   resources :hoods, only: [:index, :show]
   resources :boroughs, only: [:show]
+  resources :hashtags
 
   scope ':area' do
     resources :snapshots do
