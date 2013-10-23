@@ -1,4 +1,4 @@
-%h1 Hashtags #term: count
+%h1 Hashtags #term: count for #{@date.to_date}
 
 %table.table.table-bordered
   %tr
@@ -6,7 +6,7 @@
     - Borough.names.each do |borough|
       %th= borough
   %tr
-    %td Hour
+    %td Hour: #{analytics_hour(@hours)}
     - Borough.names.each do |borough|
       %td= analytics(@hours[borough])
   %tr
@@ -17,3 +17,7 @@
     %td Week
     - Borough.names.each do |borough|
       %td= analytics(@weeks[borough], 5)
+
+
+%div= link_to("Day before", hashtags_path(date: @date - 1.day))
+%div= link_to("Day after", hashtags_path(date: @date + 1.day))
