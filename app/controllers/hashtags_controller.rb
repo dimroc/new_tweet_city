@@ -10,7 +10,10 @@ class HashtagsController < ApplicationController
   def analytics_for(period)
     analytics = {}
     Borough.names.each do |borough|
-      analytics[borough] = HashtagAnalytics.borough(borough).period(period).first
+      analytics[borough] = HashtagAnalytics.
+        borough(borough).
+        period(period).
+        last
     end
 
     analytics

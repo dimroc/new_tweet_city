@@ -10,10 +10,10 @@ module ApplicationHelper
 
   def analytics(hashtag_analytics)
     rval = []
-    hashtag_analytics.entries.first(3).each_with_index do |entry, index|
-      rval << content_tag(:div, "#{index}) Term: #{entry.term} Count: #{entry.count}")
+    hashtag_analytics.entries.first(3).each do |entry|
+      rval << content_tag(:li, "##{entry.term}: #{entry.count}")
     end
 
-    rval.join.html_safe
+    content_tag(:ol, rval.join.html_safe)
   end
 end
