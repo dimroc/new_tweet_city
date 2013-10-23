@@ -1,3 +1,5 @@
+%h1 Hashtags #term: count
+
 %table.table.table-bordered
   %tr
     %th Period
@@ -10,8 +12,8 @@
   %tr
     %td Day
     - Borough.names.each do |borough|
-      %td= analytics(@days[borough])
+      %td= analytics(@days[borough], 4)
   %tr
     %td Week
     - Borough.names.each do |borough|
-      %td= analytics(@weeks[borough])
+      %td= analytics(@weeks[borough], 5)

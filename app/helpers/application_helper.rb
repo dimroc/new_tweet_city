@@ -8,10 +8,11 @@ module ApplicationHelper
     Snapshot.public_send(area).ascending.last.url
   end
 
-  def analytics(hashtag_analytics)
+  def analytics(hashtag_analytics, number_of_entries = 3)
     rval = []
-    hashtag_analytics.entries.first(3).each do |entry|
-      rval << content_tag(:li, "##{entry.term}: #{entry.count}")
+    hashtag_analytics.entries.first(number_of_entries).each do |entry|
+      link = link_to("##{entry.term}", "https://twitter.com/search?src=typd&q=%23#{entry.term}")
+      rval << content_tag(:li, "#{link}: #{entry.count}".html_safe)
     end
 
     content_tag(:ol, rval.join.html_safe)
