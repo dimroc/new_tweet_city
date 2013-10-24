@@ -16,7 +16,7 @@
   %tr
     %td Week
     - Borough.names.each do |borough|
-      %td= analytics(@weeks[borough], 5)
+      %td= analytics(@weeks[borough], 8)
 
 
 %div= link_to("Day before", hashtags_path(date: @date - 1.day))
