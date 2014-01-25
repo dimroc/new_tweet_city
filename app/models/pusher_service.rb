@@ -16,6 +16,12 @@ class PusherService
         def protect_against_forgery?
           false
         end
+
+        if Rails.env.development? || Rails.env.test?
+          def default_url_options
+            {host: 'localhost:3000'}
+          end
+        end
       end
 
       view.render(partial: 'boroughs/tweet', locals: { tweet: tweet })
