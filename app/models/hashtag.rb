@@ -9,14 +9,23 @@ class Hashtag < ActiveRecord::Base
   end
 
   def self.create_from_tweet(tweet)
-    tweet.hashtags.split(',').each do |term|
-      Hashtag.create(
-        tweet_id: tweet.id,
-        neighborhood_id: tweet.neighborhood_id,
-        borough: tweet.neighborhood.try(:borough),
-        term: term,
-        created_at: tweet.created_at)
-      print '.'
-    end
+    prefix =
+      "INSERT INTO hashtags (tweet_id, neighborhood_id, borough, term, updated_at, created_at) VALUES \n"
+    updated_at = DateTime.now
+    borough = tweet.neighborhood.try(:borough)
+
+    suffix = tweet.hashtags.split(',').map do |term|
+      sanitize_sql_array([
+        "(?,?,?,?,?,?)",
+        tweet.id,
+        tweet.neighborhood_id,
+        borough,
+        term,
+        updated_at,
+        tweet.created_at
+      ])
+    end.join(",\n")
+
+    connection.execute(prefix + suffix)
   end
 end
