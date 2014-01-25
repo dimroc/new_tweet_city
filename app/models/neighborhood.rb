@@ -7,6 +7,9 @@ class Neighborhood < ActiveRecord::Base
 
   validates_presence_of :name, :borough, :geometry, :slug
 
+  scope :manhattan, -> { where(borough: "Manhattan") }
+  scope :brooklyn, -> { where(borough: "Brooklyn") }
+
   class << self
     def intersects(geom)
       where(<<-SQL, geom.as_text, geom.srid)
