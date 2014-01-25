@@ -49,4 +49,7 @@ end
 group :development, :test do
   gem 'pry'
   gem 'pry-debugger'
+  gem 'rspec-rails'
+  gem 'fuubar'
+  gem 'factory_girl_rails'
 end
