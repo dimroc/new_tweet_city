@@ -9,8 +9,8 @@ class Neighborhood < ActiveRecord::Base
 
   class << self
     def intersects(geom)
-      where(<<-SQL, geom.as_text)
-        ST_Intersects(ST_AsText(neighborhoods.geometry), ?)
+      where(<<-SQL, geom.as_text, geom.srid)
+        ST_Intersects(neighborhoods.geometry, ST_GeomFromText(?, ?))
       SQL
     end
 
