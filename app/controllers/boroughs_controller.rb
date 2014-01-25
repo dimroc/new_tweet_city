@@ -3,6 +3,7 @@ class BoroughsController < ApplicationController
     @borough = params[:id].titleize
     @neighborhoods = Neighborhood.where("borough ILIKE ?", @borough)
     @tweets = fetch_tweets
+    @only_media = !!params[:only_media]
   end
 
   private
