@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Proper use:
+# source ./bin/set_env .env
 if [ -z "$1" ]
   then
     echo "No .env supplied"
