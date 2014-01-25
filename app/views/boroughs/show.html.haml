@@ -1,7 +1,14 @@
-- content_for :top do
+- top do
   - Borough.names.each do |borough|
     - klass = (borough == @borough) ? "active" : ""
     %li{class: klass}= link_to borough, borough_path(borough.downcase)
+
+  - all_tweets_class = params[:only_media] ? "" : "active"
+  - only_media_class = params[:only_media] ? "active" : ""
+  %li{class: all_tweets_class}
+    = link_to "All Tweets", borough_path(@borough)
+  %li{class: only_media_class}
+    = link_to "Only Media", borough_path(@borough, only_media: true)
 
 .absolute
   %canvas#borough.relative
@@ -9,7 +16,7 @@
 .tweets
   = image_tag 'bouncer.gif', class: 'bouncer'
   %ul
-    = render partial: 'tweet', collection: @tweets
+    = render partial: 'boroughs/tweet', collection: @tweets
 
 :javascript
   NTC.hoodsToLoad = [
@@ -18,5 +25,5 @@
 
   NTC.Loader.loadHoods(NTC.hoodsToLoad).done(function(hoods) {
     NTC.Renderer.drawHoods(hoods, 'borough');
-    NTC.Listener.listenToTweets('.tweets ul', hoods);
+    NTC.Listener.listenToTweets('.tweets ul', hoods, '#{params[:only_media]}');
   });

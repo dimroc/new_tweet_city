@@ -2,7 +2,12 @@ class PusherService
   class << self
     def broadcast_tweet(tweet)
       output = render_tweet(tweet)
-      Pusher['global'].trigger('tweet', body: output, neighborhood: tweet.neighborhood.slug)
+      Pusher['global'].trigger(
+        'tweet',
+        body: output,
+        neighborhood: tweet.neighborhood.slug,
+        media_type: tweet.media_type
+      )
     rescue => e
       puts "Error pushing tweet: #{e.message}"
     end

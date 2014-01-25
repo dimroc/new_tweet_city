@@ -25,4 +25,20 @@ module ApplicationHelper
     end
     nil
   end
+
+  def title(title = nil, &block)
+    content_for :title, title, &block
+  end
+
+  def head
+    content_for :head do
+      yield
+    end
+  end
+
+  def top
+    content_for :top do
+      yield
+    end
+  end
 end

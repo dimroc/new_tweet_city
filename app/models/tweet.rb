@@ -3,6 +3,7 @@ class Tweet < ActiveRecord::Base
 
   scope :chronological, -> { order(:created_at) }
   scope :descending, -> { order('created_at DESC') }
+  scope :has_media, -> { where.not(media_type: nil) }
 
   def self.create_from_tweet(tweet)
     coordinates = tweet['coordinates']['coordinates']
