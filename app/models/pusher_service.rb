@@ -22,8 +22,10 @@ class PusherService
           false
         end
 
-        if Rails.env.development? || Rails.env.test?
-          def default_url_options
+        def default_url_options
+          if Rails.env.production?
+            {host: "newtweetcity.com"}
+          else
             {host: 'localhost:3000'}
           end
         end
