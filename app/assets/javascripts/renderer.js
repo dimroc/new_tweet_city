@@ -109,7 +109,13 @@ NTC.Renderer = {
       var slug = event.item.data.slug;
       loading = true;
       $("canvas").css("cursor", "wait");
-      window.location.href = "/hoods/" + slug;
+
+      var destination = "/hoods/" + slug;
+      if (window.location.href.match(/only_media=true/i)) {
+        destination += "?only_media=true";
+      }
+
+      window.location.href = destination;
     };
   }
 };

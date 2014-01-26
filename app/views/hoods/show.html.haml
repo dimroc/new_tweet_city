@@ -1,7 +1,14 @@
-- content_for :top do
+- top do
   %li.active= link_to @neighborhood.name
-  %li= link_to @neighborhood.borough, borough_path(@neighborhood.borough)
+  %li= link_to @neighborhood.borough, borough_path(@neighborhood.borough, only_media: @only_media)
   %li= link_to "Other Hoods", hoods_path
+
+  - all_tweets_class = @only_media ? "" : "active"
+  - only_media_class = @only_media ? "active" : ""
+  %li{class: all_tweets_class}
+    = link_to "All Tweets", hood_path(@neighborhood)
+  %li{class: only_media_class}
+    = link_to "Only Media", hood_path(@neighborhood, only_media: true)
 
 .hood
   %canvas#hood
@@ -16,5 +23,5 @@
 
   NTC.Loader.loadHoods(NTC.hoodsToLoad).done(function(hoods) {
     NTC.Renderer.drawHoods(hoods, 'hood', 1/10);
-    NTC.Listener.listenToTweets('ul.tweets', hoods);
+    NTC.Listener.listenToTweets('ul.tweets', hoods, "#{@only_media}");
   });
