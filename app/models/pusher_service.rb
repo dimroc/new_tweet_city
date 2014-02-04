@@ -2,8 +2,10 @@ class PusherService
   class << self
     def broadcast_tweet(tweet)
       output = render_tweet(tweet)
+      channel = "tweet:#{tweet.neighborhood.borough.downcase}"
+
       Pusher['global'].trigger(
-        'tweet',
+        channel,
         body: output,
         neighborhood: tweet.neighborhood.slug,
         media_type: tweet.media_type

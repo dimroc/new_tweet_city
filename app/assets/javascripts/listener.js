@@ -1,9 +1,10 @@
 NTC.Listener = {
-  listenToTweets: function(selector, hoods, only_media) {
+  listenToTweets: function(selector, borough, hoods, only_media) {
+    var channel = 'tweet:' + borough.toLowerCase();
 
-    NTC.channel.bind('tweet', function(data) {
+    NTC.channel.bind(channel, function(data) {
       var hood = NTC.Listener.belongsToHood(data.neighborhood, hoods);
-      var should_show = (only_media && data.media_type) || !only_media
+      var should_show = (only_media == "true" && data.media_type) || only_media != 'true'
 
       if(hood && should_show) {
         NTC.Listener.colorHood(hood);

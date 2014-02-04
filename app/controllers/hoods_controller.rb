@@ -12,7 +12,7 @@ class HoodsController < ApplicationController
 
   def show
     @neighborhood = Neighborhood.find_by_slug!(params[:id])
-    @only_media = !!params[:only_media]
+    @only_media = params[:only_media] == "true"
 
     tweets = @neighborhood.tweets.descending
     tweets = tweets.has_media if @only_media
