@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.1.0'
+ruby '2.1.1'
 
-gem 'rails', '~> 4.0.2'
+gem 'rails', '~> 4.0.4'
 gem 'pg'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo'
@@ -19,7 +19,7 @@ gem 'settingslogic'
 gem 'color'
 gem 'pusher'
 
-gem 'friendly_id', github: 'FriendlyId/friendly_id', branch: 'master'
+gem 'friendly_id'
 gem 'rinku'
 
 gem 'rails_12factor'
@@ -39,16 +39,12 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
-
 group :doc do
   gem 'sdoc', require: false
 end
 
 group :development, :test do
   gem 'pry'
-  gem 'pry-debugger'
   gem 'rspec-rails'
   gem 'fuubar'
   gem 'factory_girl_rails'
