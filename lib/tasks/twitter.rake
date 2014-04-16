@@ -35,6 +35,10 @@ namespace :twitter do
 
   desc "Stream tweets from nyc to connected clients"
   task :stream => :environment do
+    %w{render_template render_partial render_collection}.each do |event|
+      ActiveSupport::Notifications.unsubscribe "#{event}.action_view"
+    end
+
     run_stream
   end
 
