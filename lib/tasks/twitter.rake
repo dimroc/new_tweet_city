@@ -22,7 +22,7 @@ namespace :twitter do
       end
 
       puts "ENDED at #{DateTime.now}"
-      sleep 60
+      sleep 30
       puts "retrying at #{DateTime.now}"
     end
   rescue => e
