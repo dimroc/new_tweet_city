@@ -15,7 +15,6 @@ class TwitterService
       elsif prev_chunk
         combined = prev_chunk + chunk
         combined_json = safe_parse(combined)
-        puts "combined json to make:\n#{combined_json}"
         yield combined_json if combined_json
         prev_chunk = nil
       else
@@ -56,8 +55,7 @@ class TwitterService
 
   def safe_parse(chunk)
     JSON.parse(chunk)
-  rescue => e
-    puts e.message
+  rescue
     nil
   end
 end
