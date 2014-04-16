@@ -5,9 +5,22 @@ class TwitterService
     path = "https://stream.twitter.com/1.1/statuses/filter.json"
     query = { locations: "-74.3,40.462,-73.65,40.95" }
 
+    prev_chunk = nil
     streamer = Proc.new do |chunk|
       json = safe_parse(chunk)
-      yield json if json
+
+      if json
+        yield json
+        prev_chunk = nil
+      elsif prev_chunk
+        combined = prev_chunk + chunk
+        combined_json = safe_parse(combined)
+        puts "combined json to make:\n#{combined_json}"
+        yield combined_json if combined_json
+        prev_chunk = nil
+      else
+        prev_chunk = chunk
+      end
     end
 
     response = Excon.get(
