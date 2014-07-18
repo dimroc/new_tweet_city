@@ -1,7 +1,7 @@
 require 'elasticsearch/model'
 
 class Tweet < ActiveRecord::Base
-  include Elasticsearch::Model
+  include SearchableTweet
 
   belongs_to :neighborhood
 
@@ -55,10 +55,6 @@ class Tweet < ActiveRecord::Base
 
         puts "Finished #{hood.name}"
       end
-    end
-
-    def search_text(word)
-      self.search(query: { match: { text: word }})
     end
   end
 
