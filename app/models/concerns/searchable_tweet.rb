@@ -6,7 +6,7 @@ module SearchableTweet
     index_name    "tweets-#{Rails.env}"
 
     settings index: { number_of_shards: 1, number_of_replicas: 0 } do
-      mappings dynamic: false do
+      mappings do
         indexes :screen_name
         indexes :text, analyzer: 'english'
         indexes :created_at, type: 'date'
