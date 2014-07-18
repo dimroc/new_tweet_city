@@ -19,6 +19,9 @@ gem 'settingslogic'
 gem 'color'
 gem 'pusher'
 
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 gem 'friendly_id'
 gem 'rinku'
 
