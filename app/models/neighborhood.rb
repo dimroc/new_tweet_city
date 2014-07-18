@@ -24,6 +24,13 @@ class Neighborhood < ActiveRecord::Base
     def west_village
       find_by_name("West Village")
     end
+
+    def generate_cache
+      Neighborhood.all.inject({}) do |memo, hood|
+        memo[hood.id] = hood
+        memo
+      end
+    end
   end
 
   def as_json(options = {})
