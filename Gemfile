@@ -19,10 +19,7 @@ gem 'settingslogic'
 gem 'color'
 gem 'pusher'
 
-git 'git@github.com:dimroc/elasticsearch-rails.git' do
-  gem 'elasticsearch-model'
-end
-
+gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
 gem 'friendly_id'

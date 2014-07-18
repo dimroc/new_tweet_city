@@ -3,7 +3,8 @@ module SearchableTweet
 
   included do
     include Elasticsearch::Model
-    index_name    "tweets-#{Rails.env}"
+    include Elasticsearch::Model::Callbacks
+    index_name "tweets-#{Rails.env}"
 
     settings index: { number_of_shards: 1, number_of_replicas: 0 } do
       mappings do
@@ -15,10 +16,6 @@ module SearchableTweet
         indexes :neighborhood_slug, index: 'not_analyzed'
         indexes :borough, index: 'not_analyzed'
       end
-    end
-
-    after_commit on: [:create] do
-      self.__elasticsearch__.index_document
     end
 
     # Customize the JSON serialization for Elasticsearch
