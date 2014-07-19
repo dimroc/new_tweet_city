@@ -8,6 +8,7 @@ class Tweet < ActiveRecord::Base
   scope :chronological, -> { order(:created_at) }
   scope :descending, -> { order('created_at DESC') }
   scope :has_media, -> { where.not(media_type: nil) }
+  scope :since_yesterday, -> { where(created_at: 1.day.ago..DateTime.now) }
 
   class << self
     def create_from_tweet(tweet)
