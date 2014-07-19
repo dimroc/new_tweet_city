@@ -64,28 +64,94 @@ module SearchableTweet
       import(options.merge({transform: transform}), &block)
     end
 
+    def search_count_in_manhattan(definition)
+      query = {
+        "size"=>0,
+        "query"=>{
+          "match"=>{
+            "text"=>definition
+          }
+        },
+        "aggs"=>{
+          "in_manhattan"=>{
+            "filter"=>{ "term"=> { "neighborhood.borough" => "Manhattan" } },
+            "aggs"=>{
+              "neighborhoods"=>{
+                "terms"=>{
+                  "field"=>"neighborhood.slug"
+                }
+              }
+            }
+          }
+        }
+      }
+
+      results = Tweet.search(query)
+      buckets = results.response.aggregations.in_manhattan.neighborhoods.buckets
+      generate_bucket_hash(buckets)
+    end
+
+    def search_count_by_location(definition)
+      query = {
+        "size"=>0,
+        "query"=>{
+          "match"=>{
+            "text"=>definition
+          }
+        },
+        "aggs"=>{
+          "boroughs"=>{
+            "terms"=>{
+              "field"=>"neighborhood.borough"
+            },
+            "aggs"=>{
+              "neighborhoods"=>{
+                "terms"=>{
+                  "field"=>"neighborhood.slug"
+                }
+              }
+            }
+          }
+        }
+      }
+
+      search_nested_locations(query)
+    end
+
     def search_count_in_hoods(definition)
       query = { match: { text: definition } }
       aggregation = { neighborhoods: { terms: { field: 'neighborhood.slug' } } }
-      results = Tweet.search(
-        { query: query, aggregations: aggregation },
-        search_type: 'count')
+      results = Tweet.search({ query: query, aggs: aggregation }, search_type: 'count')
 
-      results.response.aggregations.neighborhoods.buckets.inject({}) do |memo, term|
-        memo[term['key']] = term['doc_count']
-        memo
-      end
+      generate_bucket_hash(results.response.aggregations.neighborhoods.buckets)
     end
 
     def search_count_in_boroughs(definition)
       query = { match: { text: definition } }
       aggregation = { boroughs: { terms: { field: 'neighborhood.borough' } } }
       results = Tweet.search(
-        { query: query, aggregations: aggregation },
+        { query: query, aggs: aggregation },
         search_type: 'count')
 
-      results.response.aggregations.boroughs.buckets.inject({}) do |memo, term|
+      generate_bucket_hash(results.response.aggregations.boroughs.buckets)
+    end
+
+    private
+
+    def generate_bucket_hash(buckets)
+      buckets.inject({}) do |memo, term|
         memo[term['key']] = term['doc_count']
+        memo
+      end
+    end
+
+    def search_nested_locations(query)
+      results = Tweet.search(query)
+      results.response.aggregations.boroughs.buckets.inject({}) do |memo, term|
+        memo[term['key']] = {
+          count: term['doc_count'],
+          neighborhoods: generate_bucket_hash(term['neighborhoods']['buckets'])
+        }
         memo
       end
     end
