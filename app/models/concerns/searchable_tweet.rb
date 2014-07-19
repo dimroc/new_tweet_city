@@ -65,8 +65,10 @@ module SearchableTweet
     end
 
     def search_count_in_hoods(definition)
+      query = { match: { text: definition } }
+      aggregation = { neighborhoods: { terms: { field: 'neighborhood.slug' } } }
       results = Tweet.search(
-        { query: { match: { text: 'knicks' } }, aggregations: { neighborhoods: { terms: { field: 'neighborhood_slug' } } } },
+        { query: query, aggregations: aggregation },
         search_type: 'count')
 
       results.response.aggregations.neighborhoods.buckets.inject({}) do |memo, term|
@@ -76,8 +78,10 @@ module SearchableTweet
     end
 
     def search_count_in_boroughs(definition)
+      query = { match: { text: definition } }
+      aggregation = { boroughs: { terms: { field: 'neighborhood.borough' } } }
       results = Tweet.search(
-        { query: { match: { text: 'knicks' } }, aggregations: { boroughs: { terms: { field: 'borough' } } } },
+        { query: query, aggregations: aggregation },
         search_type: 'count')
 
       results.response.aggregations.boroughs.buckets.inject({}) do |memo, term|
