@@ -12,22 +12,30 @@ module SearchableTweet
         indexes :text, analyzer: 'english'
         indexes :created_at, type: 'date'
 
-        indexes :neighborhood, index: 'not_analyzed'
-        indexes :neighborhood_slug, index: 'not_analyzed'
-        indexes :borough, index: 'not_analyzed'
+        indexes :neighborhood do
+          indexes :name, index: 'not_analyzed'
+          indexes :slug, index: 'not_analyzed'
+          indexes :borough, index: 'not_analyzed'
+        end
       end
     end
 
     # Customize the JSON serialization for Elasticsearch
     def as_indexed_json(options={})
       rval = self.as_json(only: [:screen_name, :text, :created_at])
-      neighborhood_json = {
-        neighborhood: neighborhood.name,
-        neighborhood_slug: neighborhood.slug,
-        borough: neighborhood.borough
-      }
+      if neighborhood
+        neighborhood_json = {
+          neighborhood: {
+            name: neighborhood.name,
+            slug: neighborhood.slug,
+            borough: neighborhood.borough
+          }
+        }
 
-      rval.merge neighborhood_json
+        rval.merge neighborhood_json
+      else
+        rval
+      end
     end
   end
 
@@ -36,8 +44,6 @@ module SearchableTweet
       neighborhood_cache = Neighborhood.generate_cache
       transform = lambda do |t|
         response = {
-          _id: t.id,
-          _score: 1,
           screen_name: t.screen_name,
           text: t.text,
           created_at: t.created_at,
@@ -45,14 +51,14 @@ module SearchableTweet
 
         hood = neighborhood_cache[t.neighborhood_id]
         if hood
-          response.merge!({
-            neighborhood: hood.name,
-            neighborhood_slug: hood.slug,
+          response.merge!({ neighborhood: {
+            name: hood.name,
+            slug: hood.slug,
             borough: hood.borough
-          })
+          }})
         end
 
-        { index: response }
+        { index: { _id: t.id, _score: 1, data: response } }
       end
 
       import(options.merge({transform: transform}), &block)
