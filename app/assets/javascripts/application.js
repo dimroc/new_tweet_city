@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require underscore
 //= require paper
+//= require angular
 //
 //= require_tree ./initializers/
 //= require_tree .
