@@ -74,11 +74,14 @@ module SearchableTweet
         },
         "aggs"=>{
           "in_manhattan"=>{
-            "filter"=>{ "term"=> { "neighborhood.borough" => "Manhattan" } },
+            "filter"=>{
+              "term"=> { "neighborhood.borough" => "Manhattan" }
+            },
             "aggs"=>{
               "neighborhoods"=>{
                 "terms"=>{
-                  "field"=>"neighborhood.slug"
+                  "field"=>"neighborhood.slug",
+                  "size"=>Neighborhood.count
                 }
               }
             }
@@ -102,12 +105,14 @@ module SearchableTweet
         "aggs"=>{
           "boroughs"=>{
             "terms"=>{
-              "field"=>"neighborhood.borough"
+              "field"=>"neighborhood.borough",
+              "size"=>5
             },
             "aggs"=>{
               "neighborhoods"=>{
                 "terms"=>{
-                  "field"=>"neighborhood.slug"
+                  "field"=>"neighborhood.slug",
+                  "size"=>Neighborhood.count
                 }
               }
             }
@@ -120,7 +125,7 @@ module SearchableTweet
 
     def search_count_in_hoods(definition)
       query = { match: { text: definition } }
-      aggregation = { neighborhoods: { terms: { field: 'neighborhood.slug' } } }
+      aggregation = { neighborhoods: { terms: { field: 'neighborhood.slug', size: Neighborhood.count } } }
       results = Tweet.search({ query: query, aggs: aggregation }, search_type: 'count')
 
       generate_bucket_hash(results.response.aggregations.neighborhoods.buckets)
@@ -128,7 +133,7 @@ module SearchableTweet
 
     def search_count_in_boroughs(definition)
       query = { match: { text: definition } }
-      aggregation = { boroughs: { terms: { field: 'neighborhood.borough' } } }
+      aggregation = { boroughs: { terms: { field: 'neighborhood.borough', size: 5 } } }
       results = Tweet.search(
         { query: query, aggs: aggregation },
         search_type: 'count')
@@ -147,13 +152,15 @@ module SearchableTweet
 
     def search_nested_locations(query)
       results = Tweet.search(query)
-      results.response.aggregations.boroughs.buckets.inject({}) do |memo, term|
+      final = results.response.aggregations.boroughs.buckets.inject({}) do |memo, term|
         memo[term['key']] = {
           count: term['doc_count'],
           neighborhoods: generate_bucket_hash(term['neighborhoods']['buckets'])
         }
         memo
       end
+
+      Hashie::Mash.new final
     end
   end
 end

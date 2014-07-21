@@ -18,6 +18,7 @@ gem 'therubyracer'
 gem 'settingslogic'
 gem 'color'
 gem 'pusher'
+gem 'hashie'
 
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
@@ -47,6 +48,7 @@ group :doc do
 end
 
 group :development, :test do
+  gem 'ffaker'
   gem 'pry'
   gem 'rspec-rails'
   gem 'fuubar'
