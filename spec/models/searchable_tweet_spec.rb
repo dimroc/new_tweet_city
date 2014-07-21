@@ -13,6 +13,7 @@ describe SearchableTweet do
     end
 
     it "should import the tweets" do
+      sleep 1
       Tweet.__elasticsearch__.client.count(index: "tweets-test")["count"].should == 0
       create_tweets_without_import
       Tweet.fast_import
