@@ -1,9 +1,10 @@
 class FrequenciesController < ApplicationController
   def show
-    @frequency = if params[:q]
-                   Frequency.new(params[:id], params[:q])
-                 else
-                   Frequency.default
-                 end
+    raise ActiveRecord::RecordNotFound unless Borough.has? params[:id]
+    query = params[:q].presence || "knicks"
+    borough = params[:id].presence
+
+    @frequency = Frequency.new(borough, query)
+    @neighborhoods = Neighborhood.where(borough: borough.titleize)
   end
 end

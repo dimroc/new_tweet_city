@@ -1,9 +1,25 @@
 - head do
   = javascript_include_tag "frequencies"
 
-%form{action: frequency_path("manhattan"), method: :get, class: "form-inline" }
-  = text_field_tag :q, @frequency.q, placeholder: "Search Terms"
+- top do
+  - Borough.names.map(&:downcase).each do |borough|
+    - klass = (borough == @frequency.borough) ? "active" : ""
+    %li{class: klass}= link_to borough.titleize, frequency_path(borough, q: @frequency.q)
+
+%form{action: frequency_path("manhattan"), method: :get, role: "form", class: "form form-inline" }
+  = text_field_tag :q, @frequency.q, placeholder: "Search Terms", class: "form-control"
   = submit_tag "Search", class: "btn btn-default", name: nil
 
-%form{class: "frequency_values"}
-  %input{type: "hidden", value: @frequency.results.to_json}
+%form
+  %input{type: "hidden", id: "frequency_values", value: @frequency.results.to_json}
+  %input{type: "hidden", id: "hood_values", value: @neighborhoods.map(&:slug).to_json}
+
+.jumbotron{"ng-app"=>"hoodFrequencyApp"}
+  %div{"ng-controller" => "MainCtrl"}
+    %div{renderer: "", "ng-mousemove" => "updateTail($event)"}
+
+.mouse-tail{"ng-style" => "tailStyle"}
+  .tooltip-inner
+    {{hood.name}}
+    %br/
+    Frequency: {{hood.frequency | number}} / {{hood.totalFrequency | number}}
