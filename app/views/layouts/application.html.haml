@@ -20,18 +20,18 @@
     = javascript_include_tag "application"
     = yield(:head)
 
-  %body{class: controller_and_action}
-    .navbar.navbar-inverse{"data-no-turbolink" => ""}
-      .navbar-inner
-        .container
-          %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
+  %body{class: controller_and_action, "data-no-turbolink" => ""}
+    %nav.navbar.navbar-default.navbar-inverse(role="navigation")
+      .container
+        .navbar-header
+          %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          = link_to 'New Tweet City', root_path, class: 'brand'
-          .container.nav-collapse
-            %ul.nav
-              = yield :top
+          = link_to 'New Tweet City', root_path, class: 'navbar-brand'
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          %ul.nav.navbar-nav
+            = yield :top
 
     .github-fork-ribbon-wrapper.right-bottom
       .github-fork-ribbon
