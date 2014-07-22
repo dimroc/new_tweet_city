@@ -34,9 +34,9 @@ describe SearchableTweet do
       Tweet.__elasticsearch__.refresh_index!
     end
 
-    describe ".search_count_in_manhattan" do
+    describe ".search_count_in" do
       it "should return the correct count" do
-        Tweet.search_count_in_manhattan("same")["east-village"].should == 1
+        Tweet.search_count_in("manhattan", "same")["east-village"].should == 1
       end
     end
 

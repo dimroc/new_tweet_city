@@ -64,7 +64,7 @@ module SearchableTweet
       import(options.merge({transform: transform}), &block)
     end
 
-    def search_count_in_manhattan(definition)
+    def search_count_in(borough, definition)
       query = {
         "size"=>0,
         "query"=>{
@@ -75,7 +75,7 @@ module SearchableTweet
         "aggs"=>{
           "in_manhattan"=>{
             "filter"=>{
-              "term"=> { "neighborhood.borough" => "Manhattan" }
+              "term"=> { "neighborhood.borough" => borough.titleize }
             },
             "aggs"=>{
               "neighborhoods"=>{
