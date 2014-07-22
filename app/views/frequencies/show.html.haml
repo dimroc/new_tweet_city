@@ -1,0 +1,9 @@
+- head do
+  = javascript_include_tag "frequencies"
+
+%form{action: frequency_path("manhattan"), method: :get, class: "form-inline" }
+  = text_field_tag :q, @frequency.q, placeholder: "Search Terms"
+  = submit_tag "Search", class: "btn btn-default", name: nil
+
+%form{class: "frequency_values"}
+  %input{type: "hidden", value: @frequency.results.to_json}

@@ -5,6 +5,8 @@ NewTweetCity::Application.routes.draw do
   resources :boroughs, only: [:show]
   resources :hashtags
 
+  resources :frequencies, only: [:show]
+
   scope ':area' do
     resources :snapshots do
       collection do
