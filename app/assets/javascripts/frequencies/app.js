@@ -1,4 +1,1 @@
-angular
-  .module('hoodFrequencyApp', [
-    'config'
-  ]);
+angular.module('hoodFrequencyApp', ['config']);

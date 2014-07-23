@@ -1,5 +1,5 @@
 angular.module('hoodFrequencyApp')
-  .controller('MainCtrl', function ($scope, hoodDirectory) {
+  .controller('MainCtrl', ['$scope', 'hoodDirectory', function ($scope, hoodDirectory) {
     $scope.hoods = hoodDirectory.hoods();
 
     $scope.tailStyle = {visibility: 'hidden'};
@@ -18,4 +18,4 @@ angular.module('hoodFrequencyApp')
     $scope.$on('hood.deselected', function(event) {
       event.currentScope.hood = null;
     });
-  });
+  }]);
