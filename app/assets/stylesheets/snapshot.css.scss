@@ -1,7 +1,7 @@
 .snapshots.show {
   > .container {
     img {
-      /*max-height: 90%;*/
+      max-height: 90%;
     }
   }
 
@@ -28,6 +28,12 @@
 }
 
 .snapshots.index {
+  > .container {
+    img {
+      max-height: 90%;
+    }
+  }
+
   .absolute {
     ul, ol {
       display: inline-block;
