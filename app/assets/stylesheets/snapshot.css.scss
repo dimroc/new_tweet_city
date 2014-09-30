@@ -1,10 +1,4 @@
 .snapshots.show {
-  > .container {
-    img {
-      max-height: 1024px;
-    }
-  }
-
   .floating-header {
     position: relative;
     background-color: rgba(255,255,255,0.5);
@@ -28,12 +22,6 @@
 }
 
 .snapshots.index {
-  > .container {
-    img {
-      max-height: 1024px;
-    }
-  }
-
   .absolute {
     ul, ol {
       display: inline-block;
@@ -51,3 +39,25 @@
     }
   }
 }
+
+.snapshots {
+  .container {
+    img {
+      max-height: 1024px;
+    }
+  }
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+/* Smartphones (portrait and landscape) ----------- */
+  .snapshots {
+    > .container {
+      img {
+        max-height: 500px;
+      }
+    }
+  }
+}
+
