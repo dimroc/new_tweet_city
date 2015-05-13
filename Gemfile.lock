@@ -69,7 +69,7 @@ GEM
       faraday
       multi_json
     erubis (2.7.0)
-    eventmachine (1.0.3)
+    eventmachine (1.0.7)
     excon (0.17.0)
     execjs (2.2.1)
     factory_girl (4.4.0)
@@ -117,7 +117,7 @@ GEM
     less-rails (2.5.0)
       actionpack (>= 3.1)
       less (~> 2.5.0)
-    libv8 (3.16.14.3)
+    libv8 (3.16.14.7)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -218,7 +218,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    therubyracer (0.12.1)
+    therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
     thin (1.6.2)
