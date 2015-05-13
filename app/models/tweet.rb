@@ -30,7 +30,8 @@ class Tweet < ActiveRecord::Base
         hashtags: hashtags,
         geographic_coordinates: geographic_point,
         coordinates: point,
-        neighborhood: neighborhood
+        neighborhood: neighborhood,
+        poi: !!poi?(tweet)
       )
     end
 
@@ -69,11 +70,16 @@ class Tweet < ActiveRecord::Base
         Mercator::FACTORY.point(coordinates[0], coordinates[1])
       elsif (hash["place"] && hash["place"]["bounding_box"] && hash["place"]["place_type"] == "poi")
         polygon = hash["place"]["bounding_box"]["coordinates"]
-        binding.pry
-        Mercator::FACTORY.polygon(polygon).centroid
+        points = polygon[0].map { |p| Mercator::FACTORY.point p[0], p[1] }
+        lr = Mercator::FACTORY.linear_ring points
+        Mercator::FACTORY.polygon(lr).centroid
       else
         nil
       end
+    end
+
+    def poi?(hash)
+      hash["place"] && hash["place"]["place_type"] == "poi"
     end
 
     #def has_no_coordinates?(hash)
@@ -90,7 +96,7 @@ class Tweet < ActiveRecord::Base
     end
 
     def retrieve_hashtags(tweet)
-      return [] unless tweet
+      return [] unless tweet && tweet['entities']
 
       top = tweet['entities']['hashtags'].map do |entry|
         entry['text']
@@ -101,6 +107,7 @@ class Tweet < ActiveRecord::Base
     end
 
     def retrieve_media_element(tweet, key)
+      return nil unless tweet['entities']
       media = tweet['entities']['media']
       type = media[0][key] if media && media[0] && media[0][key]
 

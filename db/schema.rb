@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131017050454) do
+ActiveRecord::Schema.define(version: 20150513153232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20131017050454) do
     t.integer  "neighborhood_id"
     t.string   "screen_name"
     t.string   "profile_image_url"
+    t.boolean  "poi",                                                                             default: false, null: false
   end
 
   add_index "tweets", ["coordinates"], :name => "index_tweets_on_coordinates", :spatial => true
