@@ -12,8 +12,9 @@ class Tweet < ActiveRecord::Base
 
   class << self
     def create_from_tweet(tweet)
-      coordinates = tweet['coordinates']['coordinates']
-      geographic_point = Mercator::FACTORY.point(coordinates[0], coordinates[1])
+      geographic_point = retrieve_geographic_point(tweet)
+      return nil if geographic_point.blank?
+
       point = Mercator.to_projected(geographic_point)
       neighborhood = Neighborhood.intersects(point).first
 
@@ -62,6 +63,24 @@ class Tweet < ActiveRecord::Base
   private
 
   class << self
+    def retrieve_geographic_point(hash)
+      if hash["coordinates"]
+        coordinates = hash['coordinates']['coordinates']
+        Mercator::FACTORY.point(coordinates[0], coordinates[1])
+      elsif (hash["place"] && hash["place"]["bounding_box"] && hash["place"]["place_type"] == "poi")
+        polygon = hash["place"]["bounding_box"]["coordinates"]
+        binding.pry
+        Mercator::FACTORY.polygon(polygon).centroid
+      else
+        nil
+      end
+    end
+
+    #def has_no_coordinates?(hash)
+      #!hash["coordinates"] ||
+        #!(hash["place"] && hash["place"]["bounding_box"] && hash["place"]["place_type"] == "poi")
+    #end
+
     def retrieve_media_url(tweet)
       retrieve_media_element(tweet, 'media_url')
     end

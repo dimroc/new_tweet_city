@@ -4,10 +4,10 @@ namespace :twitter do
 
     while(true) do
       TwitterService.new.stream_nyc do |hash|
-        if !hash["coordinates"]
-          print 'M'
-          next
-        end
+        #if !hash["coordinates"]
+          #print 'M'
+          #next
+        #end
 
         tweet = Tweet.create_from_tweet(hash)
         if tweet && tweet.neighborhood
