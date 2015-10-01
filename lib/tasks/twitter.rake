@@ -46,4 +46,12 @@ namespace :twitter do
   task :reattach_neighborhoods => :environment do
     Tweet.reattach_neighborhoods!
   end
+
+  task :prune_old => :environment do
+    d = 2.months.ago
+    Tweet.where('created_at < ?', d).delete_all
+    Tweet.__elasticsearch__.delete_index!
+    Tweet.__elasticsearch__.create_index!
+    Tweet.import
+  end
 end
