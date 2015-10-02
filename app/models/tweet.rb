@@ -68,11 +68,11 @@ class Tweet < ActiveRecord::Base
       if hash["coordinates"]
         coordinates = hash['coordinates']['coordinates']
         Mercator::FACTORY.point(coordinates[0], coordinates[1])
-      elsif (hash["place"] && hash["place"]["bounding_box"] && hash["place"]["place_type"] == "poi")
-        polygon = hash["place"]["bounding_box"]["coordinates"]
-        points = polygon[0].map { |p| Mercator::FACTORY.point p[0], p[1] }
-        lr = Mercator::FACTORY.linear_ring points
-        Mercator::FACTORY.polygon(lr).centroid
+#      elsif (hash["place"] && hash["place"]["bounding_box"] && hash["place"]["place_type"] == "poi")
+#        polygon = hash["place"]["bounding_box"]["coordinates"]
+#        points = polygon[0].map { |p| Mercator::FACTORY.point p[0], p[1] }
+#        lr = Mercator::FACTORY.linear_ring points
+#        Mercator::FACTORY.polygon(lr).centroid
       else
         nil
       end
