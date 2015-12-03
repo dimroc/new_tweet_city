@@ -48,7 +48,7 @@ namespace :twitter do
   end
 
   task :prune_old => :environment do
-    d = 3.months.ago
+    d = 14.months.ago
     Tweet.where('created_at < ?', d).delete_all
     Tweet.__elasticsearch__.delete_index!
     Tweet.__elasticsearch__.create_index!
