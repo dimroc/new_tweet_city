@@ -4,7 +4,7 @@
     %li= link_to "#{area.humanize} Snapshots", snapshots_path(area)
   %li= link_to "Inspired by Miguel Rios' Geography of Tweets", "https://blog.twitter.com/2013/geography-tweets-3"
 
-.absolute
+.drawing-holder
   %ol{"data-no-turbolink" => ""}
     - @snapshots.each do |snapshot|
       %li= link_to "#{l snapshot.begins_at, format: :human} - #{l snapshot.ends_at, format: :human}", snapshot_path(@area, snapshot)

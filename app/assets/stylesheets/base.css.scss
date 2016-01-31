@@ -4,8 +4,10 @@
   float: right;
 }
 
-.absolute {
-  position: absolute;
+.drawing-holder {
+  @media(min-width: $screen-sm-min) {
+    position: absolute;
+  }
 }
 
 .fixed {

@@ -67,14 +67,20 @@ NTC.Renderer = {
 
     this._handleMouseEvents(scope, id);
 
-    window.onresize = function() {
+    var sizeUp = function() {
       var width = $("#"+id).width();
       var height = $("#"+id).height();
 
       if(width) {
+        width = Math.max(width, 400);
+        height = Math.max(height, 750);
         scope.view.viewSize = [width, height];
-        scope.view.draw();
       }
+    }
+
+    window.onresize = function() {
+      sizeUp();
+      scope.view.draw();
     }
 
     scope.view.onFrame = function(event) {
@@ -84,6 +90,7 @@ NTC.Renderer = {
       });
     };
 
+    sizeUp();
     scope.view.draw();
   },
 
