@@ -17,3 +17,4 @@
 .env
 .env.development
 .DS_Store
+.envrc
