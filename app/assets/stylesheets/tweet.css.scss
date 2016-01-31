@@ -26,6 +26,10 @@
   .content {
     display: inline-block;
     width: 370px;
+
+    @media(max-width: $screen-sm-min) {
+      width: 100%;
+    }
   }
 
   .body {

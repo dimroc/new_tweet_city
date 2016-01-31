@@ -95,6 +95,10 @@ NTC.Renderer = {
   },
 
   _handleMouseEvents: function(scope, id) {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      return;
+    }
+
     var tool = new scope.Tool();
     var selection = null;
     var loading = false;
